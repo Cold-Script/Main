@@ -203,6 +203,7 @@ if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
 v.Enabled = not _G.NoLiveSanity
 end
 end
+end
 end})
 Misc:AddToggle("MyToggle",{
 Text = "Delete Void Roblox",
