@@ -7,7 +7,7 @@ local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet(Repository .. "addons/ThemeManager.lua"))()
 local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
 local Window = Library:CreateWindow({
-    Title = "• WinterClaws | " .. game.Players.LocalPlayer.Name .. "•",
+    Title = "• WinterClaws | " .. game.Players.LocalPlayer.Name .. " •",
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -65,7 +65,7 @@ Callback = function(v)
 _G.RemoteDoors = v
 end})
 Misc:AddToggle("MyToggle",{
-Text = "Doors Reach",
+Text = "Reach",
 Default = false,
 Callback = function(v)
 _G.RemoteInteract = v
@@ -92,7 +92,7 @@ RemoteInteract:Disconnect()
 end
 end})
 Misc:AddSlider("MySlider",{
-Text = "Reach",
+Text = "Max Reach",
 Min = 7.5,
 Default = 7.5,
 Max = 15,
@@ -101,8 +101,30 @@ Compact = true,
 Callback = function(v)
 _G.MaxReach = v
 end})
-
-
-
+Automation:AddToggle("MyToggle",{
+Text = "Auto Padlock Unlock",
+Default = false,
+Callback = function(v)
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AutoPadlock then
+local Padlock = workspace.CurrentRooms["50"].Door:FindFirstChild("Padlock")
+if Padlock then
+if (game.Players.LocalPlayer.Character.Collision.Position - Padlock.Main.Position).Magnitude < _G.PadlockDistance then
+RemotesFolder.PL:FireServer()
+end
+end
+end
+end)
+end})
+Automation:AddSlider("MySlider",{
+Text = "Padlock Distance",
+Min = 7.5,
+Default = 7.5,
+Max = 15,
+Rounding = 1,
+Compact = true,
+Callback = function(v)
+_G.MaxReach = v
+end})
 
 
