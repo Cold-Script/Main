@@ -23,9 +23,34 @@ local Tab = {
   Visual = Window:AddTab("Visual"),
   Configs = Window:AddTab("Configs")
 }
-
-
-
+local Main = Tabs.Main:AddLeftTabbox()
+local Misc = Stats:AddTab("-Misc-")
+local Automation = Stats:AddTab("-Automation-")
+Misc:AddDropdown("MyDropdown",{
+	Values = {"Lobby","Leave","Revive"},
+	Default = "", 
+	Multi = false,
+	Text = 'Select On Death',
+	Callback = function(v)
+_G.SelectMisc = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledOnDeath then
+if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Lobby" then
+RemotesFolder.Lobby:FireServer()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Leave" then
+game:Shutdown()
+elseif game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 and _G.SelectMisc == "Revive" then
+RemotesFolder.Revive:FireServer()
+end
+end
+end)
+end})
+Misc:AddToggle("MyToggle",{
+Text = "Death",
+Default = false,
+Callback = function(v)
+_G.EnabledOnDeath = v
+end})
 
 
 
