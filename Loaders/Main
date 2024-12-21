@@ -23,9 +23,9 @@ local Tabs = {
   Visual = Window:AddTab("Visual"),
   Configs = Window:AddTab("Configs")
 }
-local Main = Tabs.Main:AddLeftTabbox()
-local Misc = Main:AddTab("-Misc-")
-local Automation = Main:AddTab("-Automation-")
+local MainI = Tabs.Main:AddLeftTabbox()
+local Misc = MainI:AddTab("-Misc-")
+local Automation = MainI:AddTab("-Automation-")
 Misc:AddDropdown("MyDropdown",{
 	Values = {"Lobby","Leave","Revive"},
 	Default = "", 
@@ -54,6 +54,18 @@ end})
 Misc:AddDivider()
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()
+if _G.FastDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):SetAttribute("FastOpen", true)
+end 
+end)
+end)
+Misc:AddToggle("MyToggle",{
+Text = "Doors Fast",
+Default = false,
+Callback = function(v)
+_G.FastDoors = v
+end})
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
 if _G.RemoteDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
 end 
 end)
@@ -63,6 +75,34 @@ Text = "Doors Reach",
 Default = false,
 Callback = function(v)
 _G.RemoteDoors = v
+end})
+Misc:AddDivider()
+Misc:AddToggle("MyToggle",{
+Text = "Through Interact",
+Default = false,
+Callback = function(v)
+_G.ThroughInteract = v
+if _G.ThroughInteract then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = false
+end
+end
+ThroughInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = false
+end
+end
+end)
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.RequiresLineOfSight = true
+end
+end
+ThroughInteract:Disconnect()
+end
 end})
 Misc:AddToggle("MyToggle",{
 Text = "Reach",
@@ -138,5 +178,39 @@ Compact = true,
 Callback = function(v)
 _G.PadlockDistance = v
 end})
-
-
+local MainII = Tabs.Main:AddLeftTabbox()
+local World = Main:AddTab("-World-")
+game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
+game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()
+end 
+end)
+Misc:AddToggle("MyToggle",{
+Text = "Closets Exit Fix",
+Default = false,
+Callback = function(v)
+_G.ClosetsExitFix = v
+end})
+Misc:AddDivider()
+Misc:AddToggle("MyToggle",{
+Text = "Delete Live Sanity",
+Default = false,
+Callback = function(v)
+_G.NoLiveSanity = v
+while _G.NoLiveSanity do wait(1)
+for _,v in workspace.CurrentCamera:GetChildren() do
+if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
+v.Enabled = not _G.NoLiveSanity
+end
+end
+end})
+Misc:AddToggle("MyToggle",{
+Text = "Delete Void Roblox",
+Default = false,
+Callback = function(v)
+if v then
+workspace.FallenPartsDestroyHeight = 0 / 0
+else
+workspace.FallenPartsDestroyHeight = -50000
+end
+end})
