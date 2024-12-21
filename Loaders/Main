@@ -136,7 +136,7 @@ Max = 100,
 Rounding = 1,
 Compact = true,
 Callback = function(v)
-_G.MaxReach = v
+_G.PadlockDistance = v
 end})
 
 
