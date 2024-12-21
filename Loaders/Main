@@ -179,7 +179,7 @@ Callback = function(v)
 _G.PadlockDistance = v
 end})
 local MainII = Tabs.Main:AddLeftTabbox()
-local World = Main:AddTab("-World-")
+local World = MainII:AddTab("-World-")
 game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
 if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
 game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()
