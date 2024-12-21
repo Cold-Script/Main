@@ -1,0 +1,35 @@
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
+game:GetService("ReplicatedStorage").EntityInfo.Name = "RemotesFolder"
+end
+local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
+local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
+local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
+local ThemeManager = loadstring(game:HttpGet(Repository .. "addons/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
+local Window = Library:CreateWindow({
+	  Title = "• WinterClaws | " .. game.Players.LocalPlayer.Name .. "•",
+  	Center = true,
+    AutoShow = true,
+    Resizable = true,
+    ShowCustomCursor = true,
+    NotifySide = "Right",
+    TabPadding = 2,
+    MenuFadeTime = 0
+})
+local Tab = {
+  Main = Window:AddTab("Main"),
+  Players = Window:AddTab("Players"),
+  Exploits = Window:AddTab("Exploits"),
+  Visual = Window:AddTab("Visual"),
+  Configs = Window:AddTab("Configs")
+}
+
+
+
+
+
+
+
+
+
+
