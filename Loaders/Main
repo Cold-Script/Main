@@ -16,7 +16,7 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
-local Tab = {
+local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
   Exploits = Window:AddTab("Exploits"),
