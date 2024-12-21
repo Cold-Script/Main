@@ -24,8 +24,8 @@ local Tabs = {
   Configs = Window:AddTab("Configs")
 }
 local Main = Tabs.Main:AddLeftTabbox()
-local Misc = Stats:AddTab("-Misc-")
-local Automation = Stats:AddTab("-Automation-")
+local Misc = Main:AddTab("-Misc-")
+local Automation = Main:AddTab("-Automation-")
 Misc:AddDropdown("MyDropdown",{
 	Values = {"Lobby","Leave","Revive"},
 	Default = "", 
@@ -51,8 +51,56 @@ Default = false,
 Callback = function(v)
 _G.EnabledOnDeath = v
 end})
-
-
+Misc:AddDivider()
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.RemoteDoors then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
+end 
+end)
+end)
+Misc:AddToggle("MyToggle",{
+Text = "Doors Reach",
+Default = false,
+Callback = function(v)
+_G.RemoteDoors = v
+end})
+Misc:AddToggle("MyToggle",{
+Text = "Doors Reach",
+Default = false,
+Callback = function(v)
+_G.RemoteInteract = v
+if _G.RemoteInteract then
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = _G.MaxReach or 7.5
+end
+end
+RemoteInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = _G.MaxReach or 7.5
+end
+end
+end)
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("ProximityPrompt") then
+v.MaxActivationDistance = 7.5
+end
+end
+RemoteInteract:Disconnect()
+end
+end})
+Misc:AddSlider("MySlider",{
+Text = "Reach",
+Min = 7.5,
+Default = 7.5,
+Max = 15,
+Rounding = 1,
+Compact = true,
+Callback = function(v)
+_G.MaxReach = v
+end})
 
 
 
