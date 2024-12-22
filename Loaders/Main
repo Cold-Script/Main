@@ -144,6 +144,7 @@ Compact = true,
 Callback = function(v)
 _G.MaxReach = v
 end})
+local Automation = MainI:AddTab("-Automation-")
 Automation:AddToggle("MyToggle",{
 Text = "Auto Breaker",
 Default = false,
@@ -368,11 +369,147 @@ local PlayersI = Tabs.Players:AddRightTabbox()
 local Character = MainII:AddTab("-Character-")
 Character:AddSlider("MySlider",{
 Text = "Speed Boost",
-Min = 0,
+Min = 5,
 Default = 5,
-Max = 10,
+Max = 20,
 Rounding = 1,
 Compact = true,
 Callback = function(v)
-_G.AlertVolume = v
+_G.SpeedBoost = v
 end})
+Character:AddToggle("MyToggle",{
+Text = "Speed Boost",
+Default = false,
+Callback = function(v)
+_G.EnabledSpeed = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledSpeed then
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoostBehind", _G.SpeeeBoost)
+else
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoostBehind", 15)
+end
+end)
+end})
+Character:AddDivider()
+Character:AddToggle("MyToggle",{
+Text = "Eat Candies",
+Default = false,
+Callback = function(v)
+_G.EatCandy = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if game.Players.LocalPlayer.Character:FindFirstChild("Candy",true) and _G.EatCandy then
+if not game.Players.LocalPlayer.Character:FindFirstChild("Meshes/DOORS_EvilCandy_Cube", true) then
+game.Players.LocalPlayer.Character.Candy.Remote:FireServer()
+end
+end
+end)
+end})
+Character:AddToggle("MyToggle",{
+Text = "No Accessories",
+Default = false,
+Callback = function(v)
+_G.NoSlow = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Head.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LowerTorso.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
+end)
+end})
+local LocalPlayer = MainII:AddTab("-LocalPlayer-")
+LocalPlayer:AddToggle("Noclip",{
+Text = "Noclip",
+Default = false,
+Callback = function(v)
+_G.Noclip = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Collision.CanCollide = not _G.Noclip
+game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = not _G.Noclip
+end)
+end}):AddKeyPicker("Noclip", {
+    Default = "N",
+    Text = "Noclip",
+    Mode = Library.IsMobile and "Toggle",
+    SyncToggleState = Library.IsMobile,
+})
+LocalPlayer:AddSlider("Speed Fly", {
+    Text = "Speed Fly",
+    Default = 50,
+    Min = 50,
+    Max = 250,
+    Rounding = 0,
+    Compact = true,
+    Callback = function(Value)
+_G.SetSpeedFly = Value
+end})
+_G.SetSpeedFly = 20
+LocalPlayer:AddToggle("StFly", {
+    Text = "Fly",
+    Default = false,
+    Callback = function(Value)
+_G.StartFly = Value
+if _G.StartFly == false then
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+end
+end
+while _G.StartFly do
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = Workspace.CurrentCamera.CoordinateFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = Vector3.new()
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X > 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X < 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z > 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z < 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
+end
+elseif game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") == nil and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") == nil then
+local bv = Instance.new("BodyVelocity")
+local bg = Instance.new("BodyGyro")
+
+bv.Name = "VelocityHandler"
+bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+bv.MaxForce = Vector3.new(0,0,0)
+bv.Velocity = Vector3.new(0,0,0)
+
+bg.Name = "GyroHandler"
+bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+bg.MaxTorque = Vector3.new(0,0,0)
+bg.P = 1000
+bg.D = 50
+end
+task.wait()
+end
+end}):AddKeyPicker("Fly", {
+   Default = "F",
+   Text = "Fly",
+   Mode = Library.IsMobile and "Toggle" or "Hold",
+   SyncToggleState = Library.IsMobile
+})
+
+
+
+
