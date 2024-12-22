@@ -428,7 +428,7 @@ game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
 game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
 end)
 end})
-local LocalPlayer = MainII:AddTab("-LocalPlayer-")
+local LocalPlayer = PlayersI:AddTab("-LocalPlayer-")
 LocalPlayer:AddToggle("Noclip",{
 Text = "Noclip",
 Default = false,
@@ -446,9 +446,9 @@ end}):AddKeyPicker("Noclip", {
 })
 LocalPlayer:AddSlider("Speed Fly", {
     Text = "Speed Fly",
-    Default = 50,
-    Min = 50,
-    Max = 250,
+    Default = 16,
+    Min = 16,
+    Max = 50,
     Rounding = 0,
     Compact = true,
     Callback = function(Value)
