@@ -178,21 +178,21 @@ Compact = true,
 Callback = function(v)
 _G.PadlockDistance = v
 end})
-local MainII = Tabs.Main:AddLeftTabbox()
+local MainII = Tabs.Main:AddRightTabbox()
 local World = MainII:AddTab("-World-")
 game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
 if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
 game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()
 end 
 end)
-Misc:AddToggle("MyToggle",{
+World:AddToggle("MyToggle",{
 Text = "Closets Exit Fix",
 Default = false,
 Callback = function(v)
 _G.ClosetsExitFix = v
 end})
-Misc:AddDivider()
-Misc:AddToggle("MyToggle",{
+World:AddDivider()
+World:AddToggle("MyToggle",{
 Text = "Delete Live Sanity",
 Default = false,
 Callback = function(v)
@@ -205,7 +205,7 @@ end
 end
 end
 end})
-Misc:AddToggle("MyToggle",{
+World:AddToggle("MyToggle",{
 Text = "Delete Void Roblox",
 Default = false,
 Callback = function(v)
