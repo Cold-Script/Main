@@ -365,8 +365,8 @@ Compact = true,
 Callback = function(v)
 _G.AlertVolume = v
 end})
-local PlayersI = Tabs.Players:AddRightTabbox()
-local Character = MainII:AddTab("-Character-")
+local PlayersI = Tabs.Players:AddLeftTabbox()
+local Character = PlayersI:AddTab("-Character-")
 Character:AddSlider("MySlider",{
 Text = "Speed Boost",
 Min = 5,
