@@ -217,6 +217,7 @@ workspace.FallenPartsDestroyHeight = -50000
 end
 end})
 World:AddDivider()
+_G.AlertVolume = 5
 World:AddToggle("MyToggle",{
 Text = "Alert Entity",
 Default = false,
@@ -344,4 +345,20 @@ end)
 else
 NotificationEntity:Disconnect()
 end
+end})
+World:AddToggle("MyToggle",{
+Text = "Alert Sound",
+Default = false,
+Callback = function(v)
+_G.SoundAlert = v
+end})
+World:AddSlider("MySlider",{
+Text = "Volume Alert",
+Min = 0,
+Default = 5,
+Max = 10,
+Rounding = 1,
+Compact = true,
+Callback = function(v)
+_G.AlertVolume = v
 end})
