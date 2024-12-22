@@ -181,6 +181,7 @@ Compact = true,
 Callback = function(v)
 _G.PadlockDistance = v
 end})
+Automation:AddDivider()
 Automation:AddButton({
 Text = "Return to Lobby",
 DoubleClick = true,
@@ -559,4 +560,62 @@ DoubleClick = true,
 Func = function(v)
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end})
-
+local PlayersII = Tabs.Players:AddRightTabbox()
+local Bypass = PlayersII:AddTab("-Bypass-")
+local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
+ClonedCollision.Name = "_CollisionClone"
+ClonedCollision.Massless = true
+ClonedCollision.Parent = game:GetService("Players").LocalPlayer.Character
+ClonedCollision.CanCollide = false
+ClonedCollision.CanQuery = false
+ClonedCollision.CustomPhysicalProperties = PhysicalProperties.new(0.01, 0.7, 0, 1, 1)
+if ClonedCollision:FindFirstChild("CollisionCrouch") then
+ClonedCollision.CollisionCrouch:Destroy()
+end
+task.spawn(function()
+while task.wait(0.23) do
+if _G.SpeedBypass then
+if ClonedCollision then
+ClonedCollision.Massless = false
+task.wait(0.23)
+if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Anchored then
+ClonedCollision.Massless = true
+task.wait(1)
+end
+ClonedCollision.Massless = true
+end
+end
+end
+end)
+Bypass:AddToggle("MyToggle",{
+Text = "Speed Bypass",
+Default = false,
+Callback = function(v)
+_G.SpeedBypass = v
+end})
+Bypass:AddToggle("MyToggle",{
+Text = "Ladder Bypass",
+Default = false,
+Callback = function(v)
+_G.LadderBypass = v
+task.spawn(function()
+while _G.LadderBypass do wait(1)
+if v and not progressPart then
+local progressPart = Instance.new("Part", workspace) do
+progressPart.Anchored = true
+progressPart.CanCollide = false
+progressPart.Name = "Ladder_Bypass"
+progressPart.Transparency = 1
+end
+if getgenv().LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
+task.wait(1)
+game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
+end
+else
+if workspace:FindFirstChild("Ladder_Bypass") then 
+workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
+end
+end
+end
+end)
+end})
