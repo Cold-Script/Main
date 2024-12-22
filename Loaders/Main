@@ -562,6 +562,11 @@ game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end})
 local PlayersII = Tabs.Players:AddRightTabbox()
 local Bypass = PlayersII:AddTab("-Bypass-")
+Bypass:AddToggle("MyToggle",{
+Text = "Speed Bypass",
+Default = false,
+Callback = function(v)
+_G.SpeedBypass = v
 local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
 ClonedCollision.Name = "_CollisionClone"
 ClonedCollision.Massless = true
@@ -587,11 +592,6 @@ end
 end
 end
 end)
-Bypass:AddToggle("MyToggle",{
-Text = "Speed Bypass",
-Default = false,
-Callback = function(v)
-_G.SpeedBypass = v
 end})
 Bypass:AddToggle("MyToggle",{
 Text = "Ladder Bypass",
@@ -616,6 +616,19 @@ if workspace:FindFirstChild("Ladder_Bypass") then
 workspace:FindFirstChild("Ladder_Bypass"):Destroy() 
 end
 end
+end
+end)
+end})
+Bypass:AddToggle("MyToggle",{
+Text = "Crouch Spoof",
+Default = false,
+Callback = function(v)
+_G.CrouchSpoof = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.CrouchSpoof then
+game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(true)
+else
+game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(false)
 end
 end)
 end})
