@@ -28,7 +28,6 @@ local Tabs = {
 }
 local MainI = Tabs.Main:AddLeftTabbox()
 local Misc = MainI:AddTab("-Misc-")
-local Automation = MainI:AddTab("-Automation-")
 Misc:AddDropdown("MyDropdown",{
 	Values = {"Lobby","Leave","Revive"},
 	Default = "", 
@@ -181,6 +180,30 @@ Rounding = 1,
 Compact = true,
 Callback = function(v)
 _G.PadlockDistance = v
+end})
+Automation:AddButton({
+Text = "Return to Lobby",
+DoubleClick = true,
+Func = function(v)
+RemotesFolder.Lobby:FireServer()
+end})
+Automation:AddButton({
+Text = "Play Again",
+DoubleClick = true,
+Func = function(v)
+RemotesFolder.PlayAgain:FireServer()
+end})
+Automation:AddButton({
+Text = "Revive",
+DoubleClick = true,
+Func = function(v)
+RemotesFolder.Revive:FireServer()
+end})
+Automation:AddButton({
+Text = "Instance Leave",
+DoubleClick = true,
+Func = function(v)
+game:Shutdown()
 end})
 local MainII = Tabs.Main:AddRightTabbox()
 local World = MainII:AddTab("-World-")
@@ -384,9 +407,9 @@ Callback = function(v)
 _G.EnabledSpeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.EnabledSpeed then
-game.Players.LocalPlayer.Character:SetAttribute("SpeedBoostBehind", _G.SpeeeBoost)
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", _G.SpeeeBoost or 5)
 else
-game.Players.LocalPlayer.Character:SetAttribute("SpeedBoostBehind", 15)
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
 end
 end)
 end})
@@ -444,6 +467,7 @@ end}):AddKeyPicker("Noclip", {
     Mode = Library.IsMobile and "Toggle",
     SyncToggleState = Library.IsMobile,
 })
+LocalPlayer:AddDivider()
 LocalPlayer:AddSlider("Speed Fly", {
     Text = "Speed Fly",
     Default = 16,
@@ -454,7 +478,7 @@ LocalPlayer:AddSlider("Speed Fly", {
     Callback = function(Value)
 _G.SetSpeedFly = Value
 end})
-_G.SetSpeedFly = 20
+_G.SetSpeedFly = 16
 LocalPlayer:AddToggle("StFly", {
     Text = "Fly",
     Default = false,
@@ -509,7 +533,30 @@ end}):AddKeyPicker("Fly", {
    Mode = Library.IsMobile and "Toggle" or "Hold",
    SyncToggleState = Library.IsMobile
 })
-
-
-
+LocalPlayer:AddToggle("MyToggle",{
+Text = "Can Jump",
+Default = false,
+Callback = function(v)
+_G.Jump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Jump)
+end)
+end})
+LocalPlayer:AddToggle("MyToggle",{
+Text = "Auto Jump",
+Default = false,
+Callback = function(v)
+_G.AutoJump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AutoJump then
+game.Players.LocalPlayer.Character.Humanoid.Jump = true
+end
+end)
+end})
+LocalPlayer:AddButton({
+Text = "Reset Character",
+DoubleClick = true,
+Func = function(v)
+game.Players.LocalPlayer.Character.Humanoid.Health = 0
+end})
 
