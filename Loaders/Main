@@ -393,9 +393,9 @@ local PlayersI = Tabs.Players:AddLeftTabbox()
 local Character = PlayersI:AddTab("-Character-")
 Character:AddSlider("MySlider",{
 Text = "Speed Boost",
-Min = 5,
-Default = 5,
-Max = 20,
+Min = 15,
+Default = 15,
+Max = 50,
 Rounding = 1,
 Compact = true,
 Callback = function(v)
@@ -408,9 +408,9 @@ Callback = function(v)
 _G.EnabledSpeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.EnabledSpeed then
-game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", _G.SpeeeBoost or 5)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.Speed or 15
 else
-game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
 end
 end)
 end})
@@ -620,7 +620,7 @@ end
 end)
 end})
 Bypass:AddToggle("MyToggle",{
-Text = "Crouch Spoof",
+Text = "Crouch Spoof Bypass",
 Default = false,
 Callback = function(v)
 _G.CrouchSpoof = v
@@ -632,3 +632,19 @@ game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(false)
 end
 end)
 end})
+Bypass:AddToggle("MyToggle",{
+Text = "Manipulate Bypass",
+Default = false,
+Callback = function(v)
+_G.ManipulateBypass = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.ManipulateBypass then
+game.Players.LocalPlayer.Character:PivotTo(game.Players.LocalPlayer.Character:GetPivot() + workspace.CurrentCamera.CFrame.LookVector * Vector3.new(1, 0, 1) * -100)
+end
+end)
+end}):AddKeyPicker("Noclip", {
+    Default = "M",
+    Text = "Manipulate Bypass",
+    Mode = Library.IsMobile and "Toggle",
+    SyncToggleState = Library.IsMobile,
+})
