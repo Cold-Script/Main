@@ -670,7 +670,7 @@ end}):AddKeyPicker("Noclip", {
     Mode = Library.IsMobile and "Toggle",
     SyncToggleState = Library.IsMobile,
 })
-local ExploitsI = Tabs.Players:AddLeftTabbox()
+local ExploitsI = Tabs.Exploits:AddLeftTabbox()
 local Anti = ExploitsI:AddTab("-Anti-")
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AntiSnare then
@@ -878,5 +878,71 @@ if child.Name == "TheWall" then
 v.CanTouch = true
 end
 end
+end
+end})
+local ExploitsII = Tabs.Exploits:AddRightTabbox()
+local Troll = ExploitsII:AddTab("-Troll-")
+Troll:AddToggle("MyToggle",{
+Text = "Waste Spam Items",
+Default = false,
+Callback = function(v)
+_G.WasteItems = v
+while task.wait(0.5) do
+if not _G.WasteItems then
+break
+end
+for _,Player in pairs(game.Players:GetPlayers()) do
+local function WasteItem(Item)
+if Item.Parent ~= game.Players.LocalPlayer.Character and Item.Parent.Parent ~= game.Players.LocalPlayer then
+if ((Item.Name == "Laser Pointer" or Item.Name == "Bulklight" or Item.Name == "Straplight" or Item.Name == "Moonlight Float" or Item.Name == "Smoothie" or Item.Name == "Moonlight Candle" or Item.Name == "Candle" or Item.Name == "Lighter" or Item.Name == "Flashlight") and Item:GetAttribute("Enabled") == false) or Item.Name == "Vitamins" then
+Item.Remote:FireServer()
+end
+end
+end
+for _,Item in pairs(Player.Backpack:GetChildren()) do
+WasteItem(Item)
+end
+for _,Item in pairs(Player.Character:GetChildren()) do
+WasteItem(Item)
+end
+end
+end
+end})
+Troll:AddToggle("MyToggle",{
+Text = "Stunned",
+Default = false,
+Callback = function(v)
+_G.Stunned = v
+while task.wait() do
+if _G.Stunned then
+game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Stunned", true)
+else
+game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Stunned", false)
+end
+end
+end})
+Troll:AddToggle("MyToggle",{
+Text = "Lag Move",
+Default = false,
+Callback = function(v)
+_G.LagBody = v
+while task.wait(1.5) do
+if _G.LagBody then
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+wait(0.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end
+end
+end})
+Troll:AddToggle("MyToggle",{
+Text = "Spam Motor Replication",
+Default = false,
+Callback = function(v)
+if v then
+SpoofMotor = game:GetService("RunService").Heartbeat:Connect(function()
+game:GetService("ReplicatedStorage").EntityInfo.MotorReplication:FireServer(math.random(1,100000),math.random(1,100000),math.random(1,100000),false)
+end)
+else
+SpoofMotor:Disconnect()
 end
 end})
