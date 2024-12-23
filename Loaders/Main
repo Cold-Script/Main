@@ -862,19 +862,19 @@ Default = false,
 Callback = function(v)
 if v then
 for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "ScaryWall" then
+if child.Name == "TheWall" then
 v.CanTouch = false
 end
 end
 AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function()
-if child.Name == "ScaryWall" then
+if child.Name == "TheWall" then
 v.CanTouch = false
 end
 end)
 else
 AntiWall:Disconnect()
 for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "ScaryWall" then
+if child.Name == "TheWall" then
 v.CanTouch = true
 end
 end
