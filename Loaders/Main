@@ -837,20 +837,22 @@ Text = "Anti-Lava",
 Default = false,
 Callback = function(v)
 if v then
-for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "Lava" then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Lava" then
 v.CanTouch = false
 end
 end
-AntiLava = workspace.CurrentRooms.ChildAdded:Connect(function(child)
-if child.Name == "Lava" then
+AntiLava = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Lava" then
 v.CanTouch = false
+end
 end
 end)
 else
 AntiLava:Disconnect()
-for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "Lava" then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Lava" then
 v.CanTouch = true
 end
 end
@@ -861,20 +863,22 @@ Text = "Anti-Seek Wall",
 Default = false,
 Callback = function(v)
 if v then
-for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "TheWall" then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "TheWall" then
 v.CanTouch = false
 end
 end
-AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function(child)
-if child.Name == "TheWall" then
+AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "TheWall" then
 v.CanTouch = false
+end
 end
 end)
 else
 AntiWall:Disconnect()
 for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "TheWall" then
+if v.Name == "TheWall" then
 v.CanTouch = true
 end
 end
@@ -886,19 +890,21 @@ Default = false,
 Callback = function(v)
 if v then
 for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "Drakobloxxer" then
+if v.Name == "Drakobloxxer" then
 v.CanTouch = false
 end
 end
-AntiDrakobloxxer = workspace.ChildAdded:Connect(function(child)
-if child.Name == "Drakobloxxer" then
+AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
+for _,child in pairs(workspace:GetDescendants()) do
+if v.Name == "Drakobloxxer" then
 v.CanTouch = false
+end
 end
 end)
 else
 AntiDrakobloxxer:Disconnect()
 for _,child in pairs(workspace:GetDescendants()) do
-if child.Name == "Drakobloxxer" then
+if v.Name == "Drakobloxxer" then
 v.CanTouch = true
 end
 end
