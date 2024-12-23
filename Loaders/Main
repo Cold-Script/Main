@@ -842,7 +842,7 @@ if child.Name == "Lava" then
 v.CanTouch = false
 end
 end
-AntiLava = workspace.CurrentRooms.ChildAdded:Connect(function()
+AntiLava = workspace.CurrentRooms.ChildAdded:Connect(function(child)
 if child.Name == "Lava" then
 v.CanTouch = false
 end
@@ -866,7 +866,7 @@ if child.Name == "TheWall" then
 v.CanTouch = false
 end
 end
-AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function()
+AntiWall = workspace.CurrentRooms.ChildAdded:Connect(function(child)
 if child.Name == "TheWall" then
 v.CanTouch = false
 end
@@ -875,6 +875,30 @@ else
 AntiWall:Disconnect()
 for _,child in pairs(workspace:GetDescendants()) do
 if child.Name == "TheWall" then
+v.CanTouch = true
+end
+end
+end
+end})
+Anti:AddToggle("MyToggle",{
+Text = "Anti-DrakoBloxxer",
+Default = false,
+Callback = function(v)
+if v then
+for _,child in pairs(workspace:GetDescendants()) do
+if child.Name == "Drakobloxxer" then
+v.CanTouch = false
+end
+end
+AntiDrakobloxxer = workspace.ChildAdded:Connect(function(child)
+if child.Name == "Drakobloxxer" then
+v.CanTouch = false
+end
+end)
+else
+AntiDrakobloxxer:Disconnect()
+for _,child in pairs(workspace:GetDescendants()) do
+if child.Name == "Drakobloxxer" then
 v.CanTouch = true
 end
 end
