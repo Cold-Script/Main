@@ -877,7 +877,7 @@ end
 end)
 else
 AntiWall:Disconnect()
-for _,child in pairs(workspace:GetDescendants()) do
+for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "TheWall" then
 v.CanTouch = true
 end
@@ -891,23 +891,18 @@ Callback = function(v)
 if v then
 for _,child in pairs(workspace:GetDescendants()) do
 if v.Name == "Drakobloxxer" then
-v.CanTouch = false
+v:Destroy()
 end
 end
 AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
 for _,child in pairs(workspace:GetDescendants()) do
 if v.Name == "Drakobloxxer" then
-v.CanTouch = false
+v:Destroy()
 end
 end
 end)
 else
 AntiDrakobloxxer:Disconnect()
-for _,child in pairs(workspace:GetDescendants()) do
-if v.Name == "Drakobloxxer" then
-v.CanTouch = true
-end
-end
 end
 end})
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
@@ -956,12 +951,10 @@ Text = "Lag Move",
 Default = false,
 Callback = function(v)
 _G.LagBody = v
-while task.wait(1.5) do
-if _G.LagBody then
+while _G.LagBody and task.wait(0.5) do
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 wait(0.5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-end
 end
 end})
 Troll:AddToggle("MyToggle",{
