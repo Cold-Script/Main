@@ -408,9 +408,11 @@ Callback = function(v)
 _G.EnabledSpeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.EnabledSpeed then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.SpeedBoost or 15
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.SpeedBoost or 17
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 1)
 else
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 17
+game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
 end
 end)
 end})
