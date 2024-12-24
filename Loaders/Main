@@ -891,15 +891,15 @@ Text = "Anti-DrakoBloxxer",
 Default = false,
 Callback = function(v)
 if v then
-for _,child in pairs(workspace:GetDescendants()) do
-if v.Name == "Drakobloxxer" then
-v:Destroy()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Parent.Name == "Drakobloxxer" then
+v[v.Name].CanTouch = false
 end
 end
 AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
-for _,child in pairs(workspace:GetDescendants()) do
-if v.Name == "Drakobloxxer" then
-v:Destroy()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Parent.Name == "Drakobloxxer" then
+v[v.Name].CanTouch = false
 end
 end
 end)
@@ -921,7 +921,7 @@ end
 for _,Player in pairs(game.Players:GetPlayers()) do
 local function WasteItem(Item)
 if Item.Parent ~= game.Players.LocalPlayer.Character and Item.Parent.Parent ~= game.Players.LocalPlayer then
-if ((Item.Name == "Laser Pointer" or Item.Name == "Bulklight" or Item.Name == "Straplight" or Item.Name == "Moonlight Float" or Item.Name == "Smoothie" or Item.Name == "Moonlight Candle" or Item.Name == "Candle" or Item.Name == "Lighter" or Item.Name == "Flashlight") and Item:GetAttribute("Enabled") == false) or Item.Name == "Vitamins" then
+if ((Item.Name == "Laser Pointer" or Item.Name == "Bulklight" or Item.Name == "Straplight" or Item.Name == "Moonlight Candle" or Item.Name == "Candle" or Item.Name == "Lighter" or Item.Name == "Flashlight") and Item:GetAttribute("Enabled") == false) or Item.Name == "Vitamins" then
 Item.Remote:FireServer()
 end
 end
@@ -932,19 +932,6 @@ end
 for _,Item in pairs(Player.Character:GetChildren()) do
 WasteItem(Item)
 end
-end
-end
-end})
-Troll:AddToggle("MyToggle",{
-Text = "Stunned",
-Default = false,
-Callback = function(v)
-_G.Stunned = v
-while task.wait() do
-if _G.Stunned then
-game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Stunned", true)
-else
-game.Players.LocalPlayer.Character.Humanoid:SetAttribute("Stunned", false)
 end
 end
 end})
@@ -970,4 +957,69 @@ end)
 else
 SpoofMotor:Disconnect()
 end
+end})
+local VisualI = Tabs.Visual:AddLeftTabbox()
+local Camera = VisualI:AddTab("-Camera-")
+Camera:AddSlider("MySlider", {
+    Text = "Field Of View",
+    Default = 70,
+    Min = 70,
+    Max = 120,
+    Rounding = 0,
+    Compact = true,
+    Callback = function(v)
+_G.FieldOfView = v
+end})
+Camera:AddToggle("MyToggle",{
+Text = "Field Of View",
+Default = false,
+Callback = function(v)
+_G.Field = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Field then
+workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 70
+else
+workspace.CurrentCamera.FieldOfView = 70
+end
+end)
+end})
+Camera:AddButton({
+Text = "No Camera Shake",
+DoubleClick = true,
+Func = function()
+RemotesFolder.CamShake:Destroy()
+end})
+Camera:AddDivider()
+Camera:AddToggle("MyToggle",{
+Text = "Delete Darkness Effect",
+Default = false,
+Callback = function(v)
+_G.Fullbright = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Fullbright then
+game.Lighting.Brightness = 1.5
+game.Lighting.GlobalShadows = false
+game.Lighting.OutdoorAmbient = Color3.new(1,1,1)
+else
+game.Lighting.Brightness = 1
+game.Lighting.GlobalShadows = true
+game.Lighting.OutdoorAmbient = Color3.new(0,0,0)
+end
+end)
+end})
+Camera:AddToggle("MyToggle",{
+Text = "Delete Thickfog",
+Default = false,
+Callback = function(v)
+pcall(function()
+if not game.Lighting:GetAttribute("FogStart") then game.Lighting:SetAttribute("FogStart", game.Lighting.FogStart) end
+if not game.Lighting:GetAttribute("FogEnd") then game.Lighting:SetAttribute("FogEnd", game.Lighting.FogEnd) end
+game.Lighting.FogStart = v and 0 or game.Lighting:GetAttribute("FogStart")
+game.Lighting.FogEnd = v and math.huge or game.Lighting:GetAttribute("FogEnd")
+local fog = game.Lighting:FindFirstChildOfClass("Atmosphere")
+if fog then
+if not fog:GetAttribute("Density") then fog:SetAttribute("Density", fog.Density) end
+fog.Density = v and 0 or fog:GetAttribute("Density")
+end
+end)
 end})
