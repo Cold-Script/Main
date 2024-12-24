@@ -219,6 +219,33 @@ Default = false,
 Callback = function(v)
 _G.ClosetsExitFix = v
 end})
+World:AddToggle("MyToggle",{
+Text = "Blur Fake Brigde",
+Default = false,
+Callback = function(v)
+_G.BlurFakeBridge = v
+if _G.BlurFakeBridge then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.75
+end
+end
+BlurFakeBridge = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.75
+end
+end
+end)
+else
+BlurFakeBridge:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0
+end
+end
+end
+end})
 World:AddDivider()
 World:AddToggle("MyToggle",{
 Text = "Delete Live Sanity",
@@ -679,7 +706,7 @@ if _G.AntiSnare then
 if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Snare") then
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
 if v.Name == "Snare" then 
-v.Hitbox.CanTouch = false
+v.Hitbox.CanTouch = not _G.AntiSnare
 end 
 end 
 end 
@@ -717,7 +744,7 @@ if _G.AntiChandelier then
 if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("ChandelierObstruction") then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
 if v.Name == "ChandelierObstruction" then 
-v.HurtPart.CanTouch = false
+v.HurtPart.CanTouch = not _G.AntiChandelier
 end 
 end 
 end 
@@ -734,7 +761,7 @@ if _G.AntiSeekArms then
 if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
 if v.Name == "Seek_Arm" then 
-v.AnimatorPart.CanTouch = false
+v.AnimatorPart.CanTouch = not _G.AntiSeekArms
 end 
 end 
 end 
@@ -746,7 +773,7 @@ if not (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") an
 if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
 for _, v in workspace:GetChildren() do
 if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
-game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(-650)
+RemotesFolder.MotorReplication:FireServer(-650)
 break
 end
 end
@@ -754,7 +781,7 @@ end
 if workspace:FindFirstChild("BackdoorLookman") and _G.AntiLookman then
 for _, v in workspace:GetChildren() do
 if v.Name == "BackdoorLookman" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
-game.ReplicatedStorage.RemotesFolder.MotorReplication:FireServer(-650)
+RemotesFolder.MotorReplication:FireServer(-650)
 break
 end
 end
@@ -795,9 +822,9 @@ Default = false,
 Callback = function(v)
 _G.AntiScreech = v
 if _G.AntiScreech then
-game:GetService("ReplicatedStorage").RemotesFolder.Screech.Name = "_Screech"
+RemotesFolder.Screech.Name = "_Screech"
 else
-game:GetService("ReplicatedStorage").RemotesFolder._Screech.Name = "Screech"
+RemotesFolder._Screech.Name = "Screech"
 end
 end})
 Anti:AddToggle("MyToggle",{
@@ -805,10 +832,10 @@ Text = "Anti-A90",
 Default = false,
 Callback = function(v)
 if v then
-game:GetService("ReplicatedStorage").RemotesFolder.A90.Name = "_A90"
+RemotesFolder.A90.Name = "_A90"
 game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = nil
 else
-game:GetService("ReplicatedStorage").RemotesFolder._A90.Name = "A90"
+RemotesFolder._A90.Name = "A90"
 game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
 end
 end})
@@ -826,11 +853,11 @@ Text = "Anti-Dread",
 Default = false,
 Callback = function(v)
 if v then
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = nil
-game:GetService("ReplicatedStorage").RemotesFolder.Dread.Name = "_Dread"
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = workspace
+RemotesFolder.Dread.Name = "_Dread"
 else
 game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
-game:GetService("ReplicatedStorage").RemotesFolder._Dread.Name = "Dread"
+RemotesFolder._Dread.Name = "Dread"
 end
 end})
 Anti:AddDivider()
@@ -892,19 +919,30 @@ Default = false,
 Callback = function(v)
 if v then
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Parent.Name == "Drakobloxxer" then
-v[v.Name].CanTouch = false
+if v..Name == "Drakobloxxer" then
+v["Smooth Block Model"].CanTouch = false
+v["Head"].CanTouch = false
+v["Weld"].CanTouch = false
 end
 end
 AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Parent.Name == "Drakobloxxer" then
-v[v.Name].CanTouch = false
+if v..Name == "Drakobloxxer" then
+v["Smooth Block Model"].CanTouch = false
+v["Head"].CanTouch = false
+v["Weld"].CanTouch = false
 end
 end
 end)
 else
 AntiDrakobloxxer:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v..Name == "Drakobloxxer" then
+v["Smooth Block Model"].CanTouch = true
+v["Head"].CanTouch = true
+v["Weld"].CanTouch = true
+end
+end
 end
 end})
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
@@ -1029,7 +1067,7 @@ Text = "Unbreaker Light",
 Default = false,
 Callback = function(v)
 if v then
-local Module_Events = require(ClientModules.Module_Events)
+local Module_Events = require(game.ReplicatedStorage.ClientModules.Module_Events)
 local ShatterFunction = Module_Events.shatter
 Module_Events.shatter = function(v)
 table.insert({}, tostring(v))
@@ -1049,4 +1087,58 @@ task.wait()
 firesignal(RemotesFolder.DeathHint.OnClientEvent,{},"Blue")
 end
 end)
+end})
+FPS:AddDivider()
+FPS:AddToggle("MyToggle",{
+Text = "Low Detail",
+Default = false,
+Callback = function(v)
+if v then
+for _, object in pairs(workspace:GetDescendants()) do
+if object:IsA("BasePart") then
+if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
+if not object:GetAttribute("Reflectance") then object:SetAttribute("Reflectance", object.Reflectance) end
+object.Material = true and Enum.Material.Plastic or object:GetAttribute("Material")
+object.Reflectance = true and 0 or object:GetAttribute("Reflectance")
+elseif object:IsA("Decal") then
+if not object:GetAttribute("Transparency") then object:SetAttribute("Transparency", object.Transparency) end
+end
+end
+workspace.Terrain.WaterReflectance = true and 0 or 1
+workspace.Terrain.WaterTransparency = true and 0 or 1
+workspace.Terrain.WaterWaveSize = true and 0 or 0.05
+workspace.Terrain.WaterWaveSpeed = true and 0 or 8
+LowQuality = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+for _, object in pairs(workspace:GetDescendants()) do
+if object:IsA("BasePart") then
+if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
+if not object:GetAttribute("Reflectance") then object:SetAttribute("Reflectance", object.Reflectance) end
+object.Material = true and Enum.Material.Plastic or object:GetAttribute("Material")
+object.Reflectance = true and 0 or object:GetAttribute("Reflectance")
+elseif object:IsA("Decal") then
+if not object:GetAttribute("Transparency") then object:SetAttribute("Transparency", object.Transparency) end
+end
+end
+workspace.Terrain.WaterReflectance = true and 0 or 1
+workspace.Terrain.WaterTransparency = true and 0 or 1
+workspace.Terrain.WaterWaveSize = true and 0 or 0.05
+workspace.Terrain.WaterWaveSpeed = true and 0 or 8
+end)
+else
+LowQuality:Disconnect()
+for _, object in pairs(workspace:GetDescendants()) do
+if object:IsA("BasePart") then
+if not object:GetAttribute("Material") then object:SetAttribute("Material", object.Material) end
+if not object:GetAttribute("Reflectance") then object:SetAttribute("Reflectance", object.Reflectance) end
+object.Material = false and Enum.Material.Plastic or object:GetAttribute("Material")
+object.Reflectance = false and 0 or object:GetAttribute("Reflectance")
+elseif object:IsA("Decal") then
+if not object:GetAttribute("Transparency") then object:SetAttribute("Transparency", object.Transparency) end
+end
+end
+workspace.Terrain.WaterReflectance = false and 0 or 1
+workspace.Terrain.WaterTransparency = false and 0 or 1
+workspace.Terrain.WaterWaveSize = false and 0 or 0.05
+workspace.Terrain.WaterWaveSpeed = false and 0 or 8
+end
 end})
