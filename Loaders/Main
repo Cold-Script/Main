@@ -1023,3 +1023,30 @@ fog.Density = v and 0 or fog:GetAttribute("Density")
 end
 end)
 end})
+local FPS = VisualI:AddTab("-FPS-")
+FPS:AddToggle("MyToggle",{
+Text = "Unbreaker Light",
+Default = false,
+Callback = function(v)
+if v then
+local Module_Events = require(ClientModules.Module_Events)
+local ShatterFunction = Module_Events.shatter
+Module_Events.shatter = function(v)
+table.insert({}, tostring(v))
+end
+else
+Module_Events.shatter = ShatterFunction
+end
+end})
+FPS:AddToggle("MyToggle",{
+Text = "Unmessage Death Hint",
+Default = false,
+Callback = function(v)
+_G.RemoveDeathHint = v
+RemotesFolder.DeathHint.OnClientEvent:Connect(function()
+if _G.RemoveDeathHint then
+task.wait()
+firesignal(RemotesFolder.DeathHint.OnClientEvent,{},"Blue")
+end
+end)
+end})
