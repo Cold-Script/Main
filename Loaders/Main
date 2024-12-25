@@ -1142,3 +1142,114 @@ workspace.Terrain.WaterWaveSize = false and 0 or 0.05
 workspace.Terrain.WaterWaveSpeed = false and 0 or 8
 end
 end})
+FPS:AddDivider()
+FPS:AddToggle("MyToggle",{
+Text = "Delete Bat Decorate",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v:IsA("Model") and v.Name == "HangingHalloweenDecor" then
+v:Destroy()
+end
+end
+NoBat = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v:IsA("Model") and v.Name == "HangingHalloweenDecor" then
+v:Destroy()
+end
+end
+end)
+else
+NoBat:Disconnect()
+end
+end})
+local VisualII = Tabs.Visual:AddRightTabbox()
+local ESP = VisualII:AddTab("-ESP-")
+
+local ESPColor = VisualII:AddTab("-Color-")
+ESPColor:AddLabel("Door ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(0, 255, 0),
+	Title = 'Door ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.DoorColorESP = v
+end})
+ESPColor:AddLabel("Key ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(255, 255, 0),
+	Title = 'Key ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.KeyColorESP = v
+end})
+ESPColor:AddLabel("Lever ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(100, 100, 100),
+	Title = 'Lever ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.LeverColorESP = v
+end})
+ESPColor:AddLabel("Book ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(255, 100, 255),
+	Title = 'Book ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.BookColorESP = v
+end})
+ESPColor:AddLabel("Fuse ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(100, 100, 100),
+	Title = 'Fuse ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.FuseColorESP = v
+end})
+ESPColor:AddLabel("Generator ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(0, 255, 0),
+	Title = 'Generator ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.GeneratorColorESP = v
+end})
+ESPColor:AddLabel("Dupe ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(255, 0, 0),
+	Title = 'Dupe ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.DupeColorESP = v
+end})
+ESPColor:AddLabel("Anchor ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(255, 255, 255),
+	Title = 'Anchor ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.AnchorColorESP = v
+end})
+ESPColor:AddLabel("Water Pump ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(0, 255, 255),
+	Title = 'WaterPump ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.WaterPumpColorESP = v
+end})
+ESPColor:AddLabel("Rooms Locker ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(0, 255, 0),
+	Title = 'Rooms Locker ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.RoomLockerColorESP = v
+end})
+ESPColor:AddLabel("Items ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(0, 255, 0),
+	Title = 'Items ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.ItemsColorESP = v
+end})
+ESPColor:AddLabel("Gold ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(255, 255, 0),
+	Title = 'Gold ESP',
+	Transparency = 0,
+	Callback = function(v)
+_G.GoldColorESP = v
+end})
+local ESPSetting = VisualII:AddTab("-ESP Setting-")
