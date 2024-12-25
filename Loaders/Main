@@ -8,7 +8,8 @@ local ThemeManager = loadstring(game:HttpGet(Repository .. "addons/ThemeManager.
 local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
 Notification:Notify("Loading...")
-wait(3)
+local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp.lua"))()
+wait(5)
 local Window = Library:CreateWindow({
     Title = "• WinterClaws | " .. game.Players.LocalPlayer.Name .. " •",
     Center = true,
@@ -19,6 +20,7 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
+wait(1)
 local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
@@ -26,6 +28,7 @@ local Tabs = {
   Visual = Window:AddTab("Visual"),
   Configs = Window:AddTab("Configs")
 }
+wait(1)
 local MainI = Tabs.Main:AddLeftTabbox()
 local Misc = MainI:AddTab("-Misc-")
 Misc:AddDropdown("MyDropdown",{
@@ -1166,7 +1169,89 @@ end
 end})
 local VisualII = Tabs.Visual:AddRightTabbox()
 local ESP = VisualII:AddTab("-ESP-")
-
+ESP:AddToggle("MyToggle",{
+Text = "Door ESP",
+Default = false,
+Callback = function(v)
+_G.ESPDoor = v
+if v then
+local function setup(room)
+local Door = room:WaitForChild("Door"):WaitForChild("Door")
+task.wait(0.1)
+local DoorESP = LibraryESP:AddESP(Door, "Door", _G.DoorColorESP or Color3.fromRGB(0, 255, 0), 25, "DoorESP")
+table.insert({},DoorESP)
+Door:WaitForChild("Open").Played:Connect(function()
+DoorESP:Destroy()
+end)
+Door.AncestryChanged:Connect(function()
+DoorESP:Destroy()
+end)
+end
+DoorINF = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+setup(room)
+end)
+for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+if room:FindFirstChild("Assets") then
+setup(room) 
+end
+end
+repeat task.wait() until not _G.ESPDoor
+DoorINF:Disconnect()
+LibraryESP:Delete("DoorESP")
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Key ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "KeyObtain" then
+LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),25,"KeyESP")
+end		
+end					                
+KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "KeyObtain" then
+LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),25,"KeyESP")
+end		
+end	
+end)
+else
+KeyESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "KeyESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Lever ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverForGate" then
+LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+end		
+end					                
+LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverForGate" then
+LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+end		
+end	
+end)
+else
+LeverGateESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverGateESP" then
+v:Destroy()
+end
+end
+end
+end})
 local ESPColor = VisualII:AddTab("-Color-")
 ESPColor:AddLabel("Door ESP"):AddColorPicker('ColorPicker',{
 	Default = Color3.fromRGB(0, 255, 0),
@@ -1176,7 +1261,7 @@ ESPColor:AddLabel("Door ESP"):AddColorPicker('ColorPicker',{
 _G.DoorColorESP = v
 end})
 ESPColor:AddLabel("Key ESP"):AddColorPicker('ColorPicker',{
-	Default = Color3.fromRGB(255, 255, 0),
+	Default = Color3.fromRGB(255, 255, 100),
 	Title = 'Key ESP',
 	Transparency = 0,
 	Callback = function(v)
