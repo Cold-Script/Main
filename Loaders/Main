@@ -229,13 +229,13 @@ Callback = function(v)
 _G.BlurFakeBridge = v
 if _G.BlurFakeBridge then
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == true then
+if v.Name == "Bridge" and not v.CanCollide == false then
 v.Transparency = 0.75
 end
 end
 BlurFakeBridge = workspace.CurrentRooms.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == true then
+if v.Name == "Bridge" and not v.CanCollide == false then
 v.Transparency = 0.75
 end
 end
@@ -243,7 +243,7 @@ end)
 else
 BlurFakeBridge:Disconnect()
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == true then
+if v.Name == "Bridge" and not v.CanCollide == false then
 v.Transparency = 0
 end
 end
@@ -654,7 +654,7 @@ Callback = function(v)
 _G.LadderBypass = v
 task.spawn(function()
 while _G.LadderBypass do wait(1)
-if v and not progressPart then
+if v and not workspace:FindFirstChild("Ladder_Bypass") then
 local progressPart = Instance.new("Part", workspace) do
 progressPart.Anchored = true
 progressPart.CanCollide = false
@@ -726,12 +726,32 @@ Text = "Anti-Dupe",
 Default = false,
 Callback = function(v)
 _G.AntiDupe = v
-while _G.AntiDupe do wait(0.25)
-for _, v in (workspace:GetDescendants()) do
+if _G.AntiDupe then
+for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "DoorFake" and v:IsA("Model") then
 v.Hidden.CanTouch = not _G.AntiDupe
 if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
-v.LockPart.UnlockPrompt.Enabled = not _G.AntiDupe
+v.LockPart.UnlockPrompt.Enabled = not true
+end
+end
+end
+AntiDupe = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" and v:IsA("Model") then
+v.Hidden.CanTouch = not _G.AntiDupe
+if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
+v.LockPart.UnlockPrompt.Enabled = not true
+end
+end
+end
+end)
+else
+AntiDupe:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" and v:IsA("Model") then
+v.Hidden.CanTouch = not false
+if v:FindFirstChild("LockPart") and v.LockPart:FindFirstChild("UnlockPrompt") then
+v.LockPart.UnlockPrompt.Enabled = not false
 end
 end
 end
@@ -1038,7 +1058,7 @@ Callback = function(v)
 _G.Fullbright = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Fullbright then
-game.Lighting.Brightness = 1.5
+game.Lighting.Brightness = 0
 game.Lighting.GlobalShadows = false
 game.Lighting.OutdoorAmbient = Color3.new(1,1,1)
 else
