@@ -8,7 +8,7 @@ local ThemeManager = loadstring(game:HttpGet(Repository .. "addons/ThemeManager.
 local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
 Notification:Notify("Loading...")
-local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp.lua"))()
+local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
 wait(5)
 local Window = Library:CreateWindow({
     Title = "• WinterClaws | " .. game.Players.LocalPlayer.Name .. " •",
@@ -1729,7 +1729,7 @@ ESPColor:AddLabel("Gold ESP"):AddColorPicker('ColorPicker',{
 _G.GoldColorESP = v
 end})
 local ESPSetting = VisualII:AddTab("-ESP Setting-")
-ESPSetting:AddToggle("MyToggle",{
+ESPSetting:AddToggle("RainbowESP",{
 Text = "Rainbow ESP",
 Default = false,
 Callback = function(v)
@@ -1750,22 +1750,18 @@ ESPSetting:AddDropdown("MyDropdown",{
 	Text = 'Select Highlight Builder',
 	Callback = function(v)
 _G.BuilderHigh = v
-game:GetService("RunService").RenderStepped:Connect(function()
 if _G.BuilderHigh == "Guiding" then
-Toggles.RainbowESP:SetValue(false)
 getgenv().GuidingESP = _G.BuiderHighE
 elseif _G.BuilderHigh == "Curious" then
-Toggles.RainbowESP:SetValue(false)
 getgenv().CuriousESP = _G.BuiderHighE
 elseif _G.BuilderHigh == "Guiding" then
-Toggles.RainbowESP:SetValue(false)
 getgenv().ModifierESP = _G.BuiderHighE
 end
-end)
 end})
 ESPSetting:AddToggle("BHE",{
 Text = "Builder ESP",
 Default = false,
 Callback = function(v)
 _G.BuilderHighE = v
+Toggles.RainbowESP:SetValue(false)
 end})
