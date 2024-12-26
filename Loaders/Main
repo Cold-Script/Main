@@ -1729,3 +1729,43 @@ ESPColor:AddLabel("Gold ESP"):AddColorPicker('ColorPicker',{
 _G.GoldColorESP = v
 end})
 local ESPSetting = VisualII:AddTab("-ESP Setting-")
+ESPSetting:AddToggle("MyToggle",{
+Text = "Rainbow ESP",
+Default = false,
+Callback = function(v)
+getgenv().RainbowESP = v
+Toggles.BHE:SetValue(false)
+end})
+ESPSetting:AddToggle("MyToggle",{
+Text = "Distance ESP",
+Default = false,
+Callback = function(v)
+getgenv().DistanceESP = v
+end})
+ESPSetting:AddDivider()
+ESPSetting:AddDropdown("MyDropdown",{
+	Values = {"Guiding","Curious","Modifier"},
+	Default = "", 
+	Multi = false,
+	Text = 'Select Highlight Builder',
+	Callback = function(v)
+_G.BuilderHigh = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.BuilderHigh == "Guiding" then
+Toggles.RainbowESP:SetValue(false)
+getgenv().GuidingESP = _G.BuiderHighE
+elseif _G.BuilderHigh == "Curious" then
+Toggles.RainbowESP:SetValue(false)
+getgenv().CuriousESP = _G.BuiderHighE
+elseif _G.BuilderHigh == "Guiding" then
+Toggles.RainbowESP:SetValue(false)
+getgenv().ModifierESP = _G.BuiderHighE
+end
+end)
+end})
+ESPSetting:AddToggle("BHE",{
+Text = "Builder ESP",
+Default = false,
+Callback = function(v)
+_G.BuilderHighE = v
+end})
