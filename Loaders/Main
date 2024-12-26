@@ -20,7 +20,7 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
-wait(1)
+wait()
 local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
@@ -28,7 +28,7 @@ local Tabs = {
   Visual = Window:AddTab("Visual"),
   Configs = Window:AddTab("Configs")
 }
-wait(1)
+wait()
 local MainI = Tabs.Main:AddLeftTabbox()
 local Misc = MainI:AddTab("-Misc-")
 Misc:AddDropdown("MyDropdown",{
@@ -229,13 +229,13 @@ Callback = function(v)
 _G.BlurFakeBridge = v
 if _G.BlurFakeBridge then
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == false then
-v.Transparency = 0.75
+if v.Name == "Bridge" and not v.CanCollide == true then
+v.Transparency = 0.9
 end
 end
 BlurFakeBridge = workspace.CurrentRooms.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == false then
+if v.Name == "Bridge" and not v.CanCollide == true then
 v.Transparency = 0.75
 end
 end
@@ -243,7 +243,7 @@ end)
 else
 BlurFakeBridge:Disconnect()
 for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Bridge" and not v.CanCollide == false then
+if v.Name == "Bridge" and not v.CanCollide == true then
 v.Transparency = 0
 end
 end
@@ -942,28 +942,22 @@ Default = false,
 Callback = function(v)
 if v then
 for _,v in pairs(workspace:GetDescendants()) do
-if v..Name == "Drakobloxxer" then
-v["Smooth Block Model"].CanTouch = false
-v["Head"].CanTouch = false
-v["Weld"].CanTouch = false
+if v.Name == "Drakobloxxer" then
+v:Destroy()
 end
 end
 AntiDrakobloxxer = workspace.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
-if v..Name == "Drakobloxxer" then
-v["Smooth Block Model"].CanTouch = false
-v["Head"].CanTouch = false
-v["Weld"].CanTouch = false
+if v.Name == "Drakobloxxer" then
+v:Destroy()
 end
 end
 end)
 else
 AntiDrakobloxxer:Disconnect()
 for _,v in pairs(workspace:GetDescendants()) do
-if v..Name == "Drakobloxxer" then
-v["Smooth Block Model"].CanTouch = true
-v["Head"].CanTouch = true
-v["Weld"].CanTouch = true
+if v.Name == "Drakobloxxer" then
+v:Destroy()
 end
 end
 end
@@ -1106,7 +1100,7 @@ Callback = function(v)
 _G.RemoveDeathHint = v
 RemotesFolder.DeathHint.OnClientEvent:Connect(function()
 if _G.RemoveDeathHint then
-task.wait()
+task.wait(1)
 firesignal(RemotesFolder.DeathHint.OnClientEvent,{},"Blue")
 end
 end)
@@ -1254,12 +1248,16 @@ if v then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
 LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+elseif v.Name == "LeverForGate" then
+LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
 end		
 end					                
 LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
 LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+elseif v.Name == "LeverForGate" then
+LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
 end		
 end	
 end)
@@ -1272,6 +1270,278 @@ end
 end
 end
 end})
+ESP:AddToggle("MyToggle",{
+Text = "Books ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),25,"BookESP")
+end		
+end					                
+BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),25,"BookESP")
+end		
+end			
+end)
+else
+BookESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "BookESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Lever ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),25,"BreakerESP")
+end		
+end					                
+BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),25,"BreakerESP")
+end		
+end					
+end)
+else
+BreakerESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "BreakerESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Generator ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),25,"GeneratorESP")
+end		
+end					                
+GeneratorESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),25,"GeneratorESP")
+end		
+end	
+end)
+else
+GeneratorESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "GeneratorESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Dupe ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" then
+LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),25,"DupeESP")
+end		
+end					                
+DupeESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "DoorFake" then
+LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),25,"DupeESP")
+end		
+end			
+end)
+else
+DupeESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "DupeESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Anchor ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),25,"AnchorESP")
+end		
+end					                
+AnchorESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),25,"AnchorESP")
+end		
+end		
+end)
+else
+AnchorESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "AnchorESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Water Pump ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "WaterPump" then
+LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),25,"PumpESP")
+end		
+end					                
+PumpESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "WaterPump" then
+LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),25,"PumpESP")
+end		
+end		
+end)
+else
+PumpESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "PumpESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Lockers ESP (The Rooms)",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Rooms_Locker" then
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
+elseif v.Name == "Rooms_Locker_Fridge" then
+LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
+end		
+end					                
+LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Rooms_Locker" then
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),25,"LockerESP")
+elseif v.Name == "Rooms_Locker_Fridge" then
+LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
+end		
+end			
+end)
+else
+LockerESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "LockerESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Items ESP",
+Default = false,
+Callback = function(v)
+_G.ItemESP = v
+if v then
+local function check(v)
+if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
+local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
+local Items = LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0,255,0),25,"ItemESP")
+table.insert({},Items)
+end
+end    
+local function setup(room)
+local assets = room:WaitForChild("Assets")     
+if assets then  
+ItemESP = assets.DescendantAdded:Connect(function(v)
+check(v) 
+end)            
+for i,v in pairs(assets:GetDescendants()) do
+check(v)
+end    
+task.spawn(function()
+repeat task.wait() until not _G.ItemESP
+subaddcon:Disconnect()  
+end) 
+end 
+end
+ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+setup(room)
+end)     
+for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+if room:FindFirstChild("Assets") then
+setup(room) 
+end
+end
+repeat task.wait() until not _G.ItemESP
+ItemESP:Disconnect()     
+LibraryESP:Delete("ItemESP")
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Gold ESP",
+Default = false,
+Callback = function(v)
+_G.GoldESP = v
+if v then
+local function check(v)
+if v:IsA("Model") and v.Name == "GoldPile" then
+task.wait(0.1)
+local Hitbox = v:WaitForChild("Hitbox")
+local DoorESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",_G.GoldColorESP or Color3.fromRGB(255,255,0),25,"GoldESP")
+table.insert({},DoorESP)
+end
+end
+local function setup(room)
+local assets = room:WaitForChild("Assets")
+GoldESP = assets.DescendantAdded:Connect(function(v)
+check(v) 
+end)
+for i,v in pairs(assets:GetDescendants()) do
+check(v)
+end         
+task.spawn(function()
+repeat task.wait() until not _G.GoldESP
+GoldESP:Disconnect()  
+end)  
+end       
+GoldESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+setup(room)
+end)
+for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+if room:FindFirstChild("Assets") then
+setup(room) 
+end
+end       
+repeat task.wait() until not _G.GoldESP
+GoldESP:Disconnect()
+LibraryESP:Delete("GoldESP")
+end
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Entity ESP",
+Default = false,
+Callback = function(v)
+
 local ESPColor = VisualII:AddTab("-Color-")
 ESPColor:AddLabel("Door ESP"):AddColorPicker('ColorPicker',{
 	Default = Color3.fromRGB(0, 255, 0),
@@ -1301,12 +1571,12 @@ ESPColor:AddLabel("Book ESP"):AddColorPicker('ColorPicker',{
 	Callback = function(v)
 _G.BookColorESP = v
 end})
-ESPColor:AddLabel("Fuse ESP"):AddColorPicker('ColorPicker',{
+ESPColor:AddLabel("Breaker ESP"):AddColorPicker('ColorPicker',{
 	Default = Color3.fromRGB(100, 100, 100),
-	Title = 'Fuse ESP',
+	Title = 'Breaker ESP',
 	Transparency = 0,
 	Callback = function(v)
-_G.FuseColorESP = v
+_G.BreakerColorESP = v
 end})
 ESPColor:AddLabel("Generator ESP"):AddColorPicker('ColorPicker',{
 	Default = Color3.fromRGB(0, 255, 0),
@@ -1330,7 +1600,7 @@ ESPColor:AddLabel("Anchor ESP"):AddColorPicker('ColorPicker',{
 _G.AnchorColorESP = v
 end})
 ESPColor:AddLabel("Water Pump ESP"):AddColorPicker('ColorPicker',{
-	Default = Color3.fromRGB(0, 255, 255),
+	Default = Color3.fromRGB(255, 0, 255),
 	Title = 'WaterPump ESP',
 	Transparency = 0,
 	Callback = function(v)
