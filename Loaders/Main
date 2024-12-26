@@ -1742,26 +1742,3 @@ Default = false,
 Callback = function(v)
 getgenv().DistanceESP = v
 end})
-ESPSetting:AddDivider()
-ESPSetting:AddDropdown("MyDropdown",{
-	Values = {"Guiding","Curious","Modifier"},
-	Default = "", 
-	Multi = false,
-	Text = 'Select Highlight Builder',
-	Callback = function(v)
-_G.BuilderHigh = v
-if _G.BuilderHigh == "Guiding" then
-getgenv().GuidingESP = _G.BuiderHighE
-elseif _G.BuilderHigh == "Curious" then
-getgenv().CuriousESP = _G.BuiderHighE
-elseif _G.BuilderHigh == "Guiding" then
-getgenv().ModifierESP = _G.BuiderHighE
-end
-end})
-ESPSetting:AddToggle("BHE",{
-Text = "Builder ESP",
-Default = false,
-Callback = function(v)
-_G.BuilderHighE = v
-Toggles.RainbowESP:SetValue(false)
-end})
