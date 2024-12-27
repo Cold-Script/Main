@@ -1742,6 +1742,27 @@ Default = false,
 Callback = function(v)
 getgenv().DistanceESP = v
 end})
+ESPSetting:AddDivider()
+ESPSetting:AddSlider("MySlider",{
+Text = "Outline Transparency",
+Min = 0,
+Default = 0,
+Max = 1,
+Rounding = 0,
+Compact = true,
+Callback = function(v)
+getgenv().OutlineTransparency = v
+end})
+ESPSetting:AddSlider("MySlider",{
+Text = "Fill Transparency",
+Min = 0.75,
+Default = 0.75,
+Max = 1,
+Rounding = 0,
+Compact = true,
+Callback = function(v)
+getgenv().FillTransparency = v
+end})
 
 local MenuGroup = Tabs.Config:AddLeftGroupbox("Menu")
 local CreditsGroup = Tabs.Config:AddRightGroupbox("Credits")
@@ -1766,4 +1787,4 @@ SaveManager:SetFolder("winterclaws/doors")
 
 SaveManager:BuildConfigSection(Tabs.Config)
 
-ThemeManager:ApplyToTab(Tabs.Configs)
+ThemeManager:ApplyToTab(Tabs.Config)
