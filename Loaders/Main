@@ -4,7 +4,7 @@ end
 local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
-local ThemeManager = loadstring(game:HttpGet(Repository .. "addons/ThemeManager.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
 local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
 Notification:Notify("Loading...")
@@ -26,7 +26,7 @@ local Tabs = {
   Players = Window:AddTab("Players"),
   Exploits = Window:AddTab("Exploits"),
   Visual = Window:AddTab("Visual"),
-  Configs = Window:AddTab("Configs")
+  Config = Window:AddTab("Configs")
 }
 wait()
 local MainI = Tabs.Main:AddLeftTabbox()
@@ -1742,3 +1742,28 @@ Default = false,
 Callback = function(v)
 getgenv().DistanceESP = v
 end})
+
+local MenuGroup = Tabs.Config:AddLeftGroupbox("Menu")
+local CreditsGroup = Tabs.Config:AddRightGroupbox("Credits")
+
+MenuGroup:AddToggle("KeybindMenuOpen", { Default = false, Text = "Open Keybind Menu", Callback = function(v) Library.KeybindFrame.Visible = v end})
+MenuGroup:AddToggle("ShowCustomCursor", {Text = "Custom Cursor", Default = true, Callback = function(v) Library.ShowCustomCursor = v end})
+MenuGroup:AddDivider()
+MenuGroup:AddLabel("Keybind"):AddKeyPicker("MenuKeybind", { Default = "RightShift", NoUI = true, Text = "Menu keybind" })
+MenuGroup:AddButton("Unload", function() Library:Unload() end)
+
+CreditsGroup:AddLabel("Developers:")
+CreditsGroup:AddLabel("'Owner' : rechedmcvn")
+
+Library.ToggleKeybind = Options.MenuKeybind
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+
+SaveManager:SetFolder("winterclaws/doors")
+
+SaveManager:BuildConfigSection(Tabs.Config)
+
+ThemeManager:ApplyToTab(Tabs.Configs)
