@@ -955,11 +955,6 @@ end
 end)
 else
 AntiDrakobloxxer:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Drakobloxxer" then
-v:Destroy()
-end
-end
 end
 end})
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
@@ -1748,7 +1743,7 @@ Text = "Outline Transparency",
 Min = 0,
 Default = 0,
 Max = 1,
-Rounding = 0,
+Rounding = 2,
 Compact = true,
 Callback = function(v)
 getgenv().OutlineTransparency = v
@@ -1758,7 +1753,7 @@ Text = "Fill Transparency",
 Min = 0.75,
 Default = 0.75,
 Max = 1,
-Rounding = 0,
+Rounding = 2,
 Compact = true,
 Callback = function(v)
 getgenv().FillTransparency = v
