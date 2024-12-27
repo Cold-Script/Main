@@ -223,6 +223,21 @@ Callback = function(v)
 _G.ClosetsExitFix = v
 end})
 World:AddToggle("MyToggle",{
+Text = "Invisible Move Button",
+Default = false,
+Callback = function(v)
+_G.InvisMouseButton = v
+if _G.InvisMouseButton then
+game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = false
+InvisMouseButton = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = false
+end)
+else
+InvisMouseButton:Disconnect()
+game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = true
+end
+end})
+World:AddToggle("MyToggle",{
 Text = "Blur Fake Brigde",
 Default = false,
 Callback = function(v)
@@ -615,12 +630,6 @@ Func = function(v)
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end})
 local PlayersII = Tabs.Players:AddRightTabbox()
-local Bypass = PlayersII:AddTab("-Bypass-")
-Bypass:AddToggle("MyToggle",{
-Text = "Speed Bypass",
-Default = false,
-Callback = function(v)
-_G.SpeedBypass = v
 local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
 ClonedCollision.Name = "_CollisionClone"
 ClonedCollision.Massless = true
@@ -646,6 +655,12 @@ end
 end
 end
 end)
+local Bypass = PlayersII:AddTab("-Bypass-")
+Bypass:AddToggle("MyToggle",{
+Text = "Speed Bypass",
+Default = false,
+Callback = function(v)
+_G.SpeedBypass = v
 end})
 Bypass:AddToggle("MyToggle",{
 Text = "Ladder Bypass",
@@ -654,16 +669,17 @@ Callback = function(v)
 _G.LadderBypass = v
 task.spawn(function()
 while _G.LadderBypass do wait(1)
-if v and not workspace:FindFirstChild("Ladder_Bypass") then
+if _G.LadderBypass and not workspace:FindFirstChild("Ladder_Bypass") then
 local progressPart = Instance.new("Part", workspace) do
 progressPart.Anchored = true
 progressPart.CanCollide = false
 progressPart.Name = "Ladder_Bypass"
 progressPart.Transparency = 1
 end
-if getgenv().LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
-task.wait(1)
+if _G.LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
+task.wait()
 game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
+Notification("Complete!")
 end
 else
 if workspace:FindFirstChild("Ladder_Bypass") then 
@@ -678,13 +694,11 @@ Text = "Crouch Spoof Bypass",
 Default = false,
 Callback = function(v)
 _G.CrouchSpoof = v
-game:GetService("RunService").RenderStepped:Connect(function()
 if _G.CrouchSpoof then
 game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(true)
 else
 game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(false)
 end
-end)
 end})
 Bypass:AddToggle("MyToggle",{
 Text = "Manipulate Bypass",
@@ -876,10 +890,10 @@ Text = "Anti-Dread",
 Default = false,
 Callback = function(v)
 if v then
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = workspace
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Visible = false
 RemotesFolder.Dread.Name = "_Dread"
 else
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Parent = game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare
+game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Visible = true
 RemotesFolder._Dread.Name = "Dread"
 end
 end})
@@ -971,7 +985,7 @@ end
 for _,Player in pairs(game.Players:GetPlayers()) do
 local function WasteItem(Item)
 if Item.Parent ~= game.Players.LocalPlayer.Character and Item.Parent.Parent ~= game.Players.LocalPlayer then
-if ((Item.Name == "Laser Pointer" or Item.Name == "Bulklight" or Item.Name == "Straplight" or Item.Name == "Moonlight Candle" or Item.Name == "Candle" or Item.Name == "Lighter" or Item.Name == "Flashlight") and Item:GetAttribute("Enabled") == false) or Item.Name == "Vitamins" then
+if ((Item.Name == "LaserPointer" or Item.Name == "Bulklight" or Item.Name == "Straplight" or Item.Name == "MoonlightCandle" or Item.Name == "Candle" or Item.Name == "Lighter" or Item.Name == "Flashlight") and Item:GetAttribute("Enabled") == false) or Item.Name == "Vitamins" then
 Item.Remote:FireServer()
 end
 end
@@ -1219,7 +1233,7 @@ if v.Name == "KeyObtain" then
 LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),25,"KeyESP")
 end		
 end					                
-KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
 LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),25,"KeyESP")
@@ -1247,7 +1261,7 @@ elseif v.Name == "LeverForGate" then
 LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
 end		
 end					                
-LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
 LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
@@ -1275,7 +1289,7 @@ if v.Name == "LiveHintBook" then
 LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),25,"BookESP")
 end		
 end					                
-BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
 LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),25,"BookESP")
@@ -1433,14 +1447,14 @@ elseif v.Name == "Rooms_Locker_Fridge" then
 LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
 end		
 end					                
-LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Rooms_Locker" then
 LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),25,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
 LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
 end		
-end			
+end
 end)
 else
 LockerESP:Disconnect()
@@ -1750,7 +1764,7 @@ getgenv().OutlineTransparency = v
 end})
 ESPSetting:AddSlider("MySlider",{
 Text = "Fill Transparency",
-Min = 0.75,
+Min = 0,
 Default = 0.75,
 Max = 1,
 Rounding = 2,
