@@ -679,7 +679,7 @@ end
 if _G.LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
 task.wait()
 game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
-Notification("Complete!")
+Notification:Notify("Complete!")
 end
 else
 if workspace:FindFirstChild("Ladder_Bypass") then 
@@ -694,11 +694,9 @@ Text = "Crouch Spoof Bypass",
 Default = false,
 Callback = function(v)
 _G.CrouchSpoof = v
-if _G.CrouchSpoof then
-game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(true)
-else
-game:GetService("ReplicatedStorage").RemotesFolder.Crouch:FireServer(false)
-end
+game:GetService("RunService").RenderStepped:Connect(function()
+RemotesFolder.Crouch:FireServer(_G.CrouchSpoof)
+end)
 end})
 Bypass:AddToggle("MyToggle",{
 Text = "Manipulate Bypass",
@@ -1393,12 +1391,12 @@ if v.Name == "MinesAnchor" then
 LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),25,"AnchorESP")
 end		
 end					                
-AnchorESP = workspace.ChildAdded:Connect(function(child)                       
+AnchorESP = workspace.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesAnchor" then
 LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),25,"AnchorESP")
 end		
-end		
+end			
 end)
 else
 AnchorESP:Disconnect()
@@ -1473,7 +1471,6 @@ _G.ItemESP = v
 if v then
 local function check(v)
 if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
 local Items = LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0,255,0),25,"ItemESP")
 table.insert({},Items)
 end
