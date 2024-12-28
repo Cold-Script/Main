@@ -1200,7 +1200,7 @@ if v then
 local function setup(room)
 local Door = room:WaitForChild("Door"):WaitForChild("Door")
 task.wait(0.1)
-local DoorESP = LibraryESP:AddESP(Door, "Door", _G.DoorColorESP or Color3.fromRGB(0, 255, 0), 25, "DoorESP")
+local DoorESP = LibraryESP:AddESP(Door, "Door", _G.DoorColorESP or Color3.fromRGB(0, 255, 0), 40, "DoorESP")
 table.insert({},DoorESP)
 Door:WaitForChild("Open").Played:Connect(function()
 DoorESP:Destroy()
@@ -1229,13 +1229,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
-LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),25,"KeyESP")
+LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),40,"KeyESP")
 end		
 end					                
 KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
-LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),25,"KeyESP")
+LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),40,"KeyESP")
 end		
 end	
 end)
@@ -1255,17 +1255,17 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
-LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
-elseif v.Name == "LeverForGate" then
-LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
+elseif v.Name == "TimerLever" then
+LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
 end		
 end					                
 LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
-LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
-elseif v.Name == "LeverForGate" then
-LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),25,"LeverGateESP")
+LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
+elseif v.Name == "TimerLever" then
+LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
 end		
 end	
 end)
@@ -1285,13 +1285,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),25,"BookESP")
+LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),40,"BookESP")
 end		
 end					                
 BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),25,"BookESP")
+LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),40,"BookESP")
 end		
 end			
 end)
@@ -1311,13 +1311,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
-LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),25,"BreakerESP")
+LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),40,"BreakerESP")
 end		
 end					                
 BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
-LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),25,"BreakerESP")
+LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),40,"BreakerESP")
 end		
 end					
 end)
@@ -1337,13 +1337,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
-LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),25,"GeneratorESP")
+LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),40,"GeneratorESP")
 end		
 end					                
 GeneratorESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
-LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),25,"GeneratorESP")
+LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),40,"GeneratorESP")
 end		
 end	
 end)
@@ -1363,13 +1363,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "DoorFake" then
-LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),25,"DupeESP")
+LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),40,"DupeESP")
 end		
 end					                
 DupeESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "DoorFake" then
-LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),25,"DupeESP")
+LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),40,"DupeESP")
 end		
 end			
 end)
@@ -1389,15 +1389,22 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesAnchor" then
-LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),25,"AnchorESP")
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
 end		
 end					                
-AnchorESP = workspace.ChildAdded:Connect(function(v)                       
+AnchorESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesAnchor" then
-LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),25,"AnchorESP")
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
 end		
 end			
+end)
+AnchorESP = workspace.CurrentRooms.DescendantAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
+end		
+end	
 end)
 else
 AnchorESP:Disconnect()
@@ -1415,13 +1422,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "WaterPump" then
-LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),25,"PumpESP")
+LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),40,"PumpESP")
 end		
 end					                
 PumpESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "WaterPump" then
-LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),25,"PumpESP")
+LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),40,"PumpESP")
 end		
 end		
 end)
@@ -1441,17 +1448,17 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Rooms_Locker" then
-LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),40,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
-LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
+LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),40,"LockerESP")
 end		
 end					                
 LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Rooms_Locker" then
-LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),25,"LockerESP")
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),40,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
-LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),25,"LockerESP")
+LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),40,"LockerESP")
 end		
 end
 end)
@@ -1470,35 +1477,18 @@ Default = false,
 Callback = function(v)
 _G.ItemESP = v
 if v then
-local function check(v)
+for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-local Items = LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0,255,0),25,"ItemESP")
-table.insert({},Items)
+LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
 end
-end    
-local function setup(room)
-local assets = room:WaitForChild("Assets")     
-if assets then  
-ItemESP = assets.DescendantAdded:Connect(function(v)
-check(v) 
-end)            
-for i,v in pairs(assets:GetDescendants()) do
-check(v)
-end    
-task.spawn(function()
-repeat task.wait() until not _G.ItemESP
-subaddcon:Disconnect()  
-end) 
-end 
 end
-ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-setup(room)
+ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
+LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
+end
+end
 end)     
-for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-if room:FindFirstChild("Assets") then
-setup(room) 
-end
-end
 repeat task.wait() until not _G.ItemESP
 ItemESP:Disconnect()     
 LibraryESP:Delete("ItemESP")
@@ -1514,7 +1504,7 @@ local function check(v)
 if v:IsA("Model") and v.Name == "GoldPile" then
 task.wait(0.1)
 local Hitbox = v:WaitForChild("Hitbox")
-local DoorESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",_G.GoldColorESP or Color3.fromRGB(255,255,0),25,"GoldESP")
+local DoorESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",_G.GoldColorESP or Color3.fromRGB(255,255,0),40,"GoldESP")
 table.insert({},DoorESP)
 end
 end
@@ -1551,85 +1541,85 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
-LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),25,"RushESP")
+LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),40,"RushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "AmbushMoving" then
-LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),25,"AmbushESP")
+LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),40,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
-LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),25,"JeffESP")
+LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),40,"JeffESP")
 elseif v.Name == "Eyes" then
-LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),25,"EyesESP")
+LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
 elseif v.Name == "BackdoorRush" then
-LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),25,"BlitzESP")
+LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),40,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
-LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),25,"LookmanESP")
+LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),40,"LookmanESP")
 elseif v.Name == "FigureRig" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
 elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
+LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),40,"GiggleESP")
 elseif v.Name == "Grumbo" then
-LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
+LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),40,"GrumbleESP")
 elseif v.Name == "A60" then
-LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),25,"A60ESP")
+LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),40,"A60ESP")
 v.Main.Transparency = 0
 elseif v.Name == "A120" then
-LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),25,"A120ESP")
+LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),40,"A120ESP")
 v.Main.Transparency = 0
 elseif v.Name == "Dread" then
-LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
+LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),40,"DreadESP")
 v.Main.Transparency = 0
 elseif v.Name == "Drakobloxxer" then
-LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),25,"DrakoESP")
+LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),40,"DrakoESP")
 end		
 end					                
 EntityESP = workspace.ChildAdded:Connect(function(v)    
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
 if v:IsDescendantOf(workspace) then
 if v.Name == "RushMoving" then
-LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),25,"RushESP")
+LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),40,"RushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "AmbushMoving" then
-LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),25,"AmbushESP")
+LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),40,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
-LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),25,"JeffESP")
+LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),40,"JeffESP")
 elseif v.Name == "Eyes" then
-LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),25,"EyesESP")
+LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
 v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
-LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),25,"BlitzESP")
+LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),40,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
-LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),25,"LookmanESP")
+LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),40,"LookmanESP")
 v.Core.Transparency = 0
 elseif v.Name == "A60" then
-LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),25,"A60ESP")
+LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),40,"A60ESP")
 v.Main.Transparency = 0
 elseif v.Name == "A120" then
-LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),25,"A120ESP")
+LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),40,"A120ESP")
 v.Main.Transparency = 0
 elseif v.Name == "Dread" then
-LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),25,"DreadESP")
+LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),40,"DreadESP")
 v.Main.Transparency = 0
 elseif v.Name == "Drakobloxxer" then
-LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),25,"DrakoESP")
+LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),40,"DrakoESP")
 end		
 end						
 end)
 EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "FigureRig" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),25,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
 elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),25,"GiggleESP")
+LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),40,"GiggleESP")
 elseif v.Name == "Grumbo" then
-LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),25,"GrumbleESP")
+LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),40,"GrumbleESP")
 end
 end
 end)
