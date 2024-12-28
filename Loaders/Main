@@ -222,20 +222,23 @@ Default = false,
 Callback = function(v)
 _G.ClosetsExitFix = v
 end})
+game:GetService("RunService").RenderStepped:Connect(function()
+if not (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Collision")) then return end
+if _G.RushNodes then
+for _, Room in pairs(workspace.CurrentRooms:GetDescendants()) do
+if Room:FindFirstChild("PathfindNodes") then
+for _, Node in Room.PathfindNodes:GetChildren() do
+Node.Transparency = _G.RushNodes and 0 or 1
+end
+end
+end
+end
+end)
 World:AddToggle("MyToggle",{
-Text = "Invisible Move Button",
+Text = "Show Rush Nodes",
 Default = false,
 Callback = function(v)
-_G.InvisMouseButton = v
-if _G.InvisMouseButton then
-game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = false
-InvisMouseButton = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = false
-end)
-else
-InvisMouseButton:Disconnect()
-game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = true
-end
+_G.RushNodes = v
 end})
 World:AddToggle("MyToggle",{
 Text = "Blur Fake Brigde",
@@ -264,6 +267,21 @@ end
 end
 end
 end})
+World:AddToggle("MyToggle",{
+Text = "Invisible Moving ( Button )",
+Default = false,
+Callback = function(v)
+_G.InvisMouseButton = v
+if _G.InvisMouseButton then
+game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = false
+InvisMouseButton = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = false
+end)
+else
+InvisMouseButton:Disconnect()
+game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = true
+end
+end})
 World:AddDivider()
 World:AddToggle("MyToggle",{
 Text = "Delete Live Sanity",
@@ -275,6 +293,17 @@ for _,v in workspace.CurrentCamera:GetChildren() do
 if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
 v.Enabled = not _G.NoLiveSanity
 end
+end
+end
+end})
+World:AddToggle("MyToggle",{
+Text = "Delete Hiding Effect",
+Default = false,
+Callback = function(v)
+_G.NoHidingEffect = v
+while _G.NoHidingEffect do wait(1)
+if game.Players.LocalPlayer.Character:GetAttribute("Hiding") == true then
+game.Players.LocalPlayer.Character:GetAttribute("Hiding", false)
 end
 end
 end})
@@ -452,12 +481,23 @@ Default = false,
 Callback = function(v)
 _G.EnabledSpeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if _G.EnabledSpeed then
+if _G.EnabledSpeed and not _G.SeekSpeed then
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.SpeedBoost or 17
 game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 1)
 else
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 17
 game.Players.LocalPlayer.Character:SetAttribute("SpeedBoost", 0)
+end
+end)
+end})
+Character:AddToggle("MyToggle",{
+Text = "Running Seek Speed",
+Default = false,
+Callback = function(v)
+_G.SeekSpeed = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.SeekSpeed then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 20
 end
 end)
 end})
@@ -642,7 +682,7 @@ ClonedCollision.CollisionCrouch:Destroy()
 end
 task.spawn(function()
 while task.wait(0.23) do
-if _G.SpeedBypass then
+if _G.SpeedBypass and not _G.SeekSpeed then
 if ClonedCollision then
 ClonedCollision.Massless = false
 task.wait(0.23)
@@ -1398,13 +1438,6 @@ if v.Name == "MinesAnchor" then
 LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
 end		
 end			
-end)
-AnchorESP = workspace.CurrentRooms.DescendantAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "MinesAnchor" then
-LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
-end		
-end	
 end)
 else
 AnchorESP:Disconnect()
