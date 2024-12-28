@@ -887,13 +887,14 @@ Anti:AddToggle("MyToggle",{
 Text = "Anti-Dread",
 Default = false,
 Callback = function(v)
-if v then
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Visible = false
-RemotesFolder.Dread.Name = "_Dread"
+_G.AntiDread = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiDread then
+RemotesFolder.Dread:FireServer("_Dread")
 else
-game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_Dread").Visible = true
-RemotesFolder._Dread.Name = "Dread"
+RemotesFolder.Dread:FireServer(true)
 end
+end)
 end})
 Anti:AddDivider()
 Anti:AddToggle("MyToggle",{
@@ -967,6 +968,65 @@ end
 end)
 else
 AntiDrakobloxxer:Disconnect()
+end
+end})
+Anti:AddDivider()
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Rush",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "RushMoving" then
+v.RushNew.CanTouch = false
+v.RushNew.CanCollide = false
+end
+end
+AntiRush = workspace.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "RushMoving" then
+v.RushNew.CanTouch = false
+v.RushNew.CanCollide = false
+end
+end
+end)
+else
+AntiRush:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "RushMoving" then
+v.RushNew.CanTouch = true
+v.RushNew.CanCollide = true
+end
+end
+end
+end})
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Ambush",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "AmbushMoving" then
+v.RushNew.CanTouch = false
+v.RushNew.CanCollide = false
+end
+end
+AntiAmbush = workspace.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "AmbushMoving" then
+v.RushNew.CanTouch = false
+v.RushNew.CanCollide = false
+end
+end
+end)
+else
+AntiAmbush:Disconnect()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "AmbushMoving" then
+v.RushNew.CanTouch = true
+v.RushNew.CanCollide = true
+end
+end
 end
 end})
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
