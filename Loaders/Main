@@ -970,65 +970,6 @@ else
 AntiDrakobloxxer:Disconnect()
 end
 end})
-Anti:AddDivider()
-Anti:AddToggle("MyToggle",{
-Text = "Anti-Rush",
-Default = false,
-Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "RushMoving" then
-v.RushNew.CanTouch = false
-v.RushNew.CanCollide = false
-end
-end
-AntiRush = workspace.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "RushMoving" then
-v.RushNew.CanTouch = false
-v.RushNew.CanCollide = false
-end
-end
-end)
-else
-AntiRush:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "RushMoving" then
-v.RushNew.CanTouch = true
-v.RushNew.CanCollide = true
-end
-end
-end
-end})
-Anti:AddToggle("MyToggle",{
-Text = "Anti-Ambush",
-Default = false,
-Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "AmbushMoving" then
-v.RushNew.CanTouch = false
-v.RushNew.CanCollide = false
-end
-end
-AntiAmbush = workspace.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "AmbushMoving" then
-v.RushNew.CanTouch = false
-v.RushNew.CanCollide = false
-end
-end
-end)
-else
-AntiAmbush:Disconnect()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "AmbushMoving" then
-v.RushNew.CanTouch = true
-v.RushNew.CanCollide = true
-end
-end
-end
-end})
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
 local Troll = ExploitsII:AddTab("-Troll-")
 Troll:AddToggle("MyToggle",{
