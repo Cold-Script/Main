@@ -163,6 +163,7 @@ Automation:AddToggle("MyToggle",{
 Text = "Auto Padlock Unlock",
 Default = false,
 Callback = function(v)
+_G.AutoPadlock = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AutoPadlock then
 local Padlock = workspace.CurrentRooms["50"].Door:FindFirstChild("Padlock")
@@ -222,24 +223,6 @@ Default = false,
 Callback = function(v)
 _G.ClosetsExitFix = v
 end})
-game:GetService("RunService").RenderStepped:Connect(function()
-if not (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Collision")) then return end
-if _G.RushNodes then
-for _, Room in pairs(workspace.CurrentRooms:GetDescendants()) do
-if Room:FindFirstChild("PathfindNodes") then
-for _, Node in Room.PathfindNodes:GetChildren() do
-Node.Transparency = _G.RushNodes and 0 or 1
-end
-end
-end
-end
-end)
-World:AddToggle("MyToggle",{
-Text = "Show Rush Nodes",
-Default = false,
-Callback = function(v)
-_G.RushNodes = v
-end})
 World:AddToggle("MyToggle",{
 Text = "Blur Fake Brigde",
 Default = false,
@@ -293,17 +276,6 @@ for _,v in workspace.CurrentCamera:GetChildren() do
 if v.Name == "LiveSanity" and workspace:FindFirstChild("EntityModel") then
 v.Enabled = not _G.NoLiveSanity
 end
-end
-end
-end})
-World:AddToggle("MyToggle",{
-Text = "Delete Hiding Effect",
-Default = false,
-Callback = function(v)
-_G.NoHidingEffect = v
-while _G.NoHidingEffect do wait(1)
-if game.Players.LocalPlayer.Character:GetAttribute("Hiding") == true then
-game.Players.LocalPlayer.Character:GetAttribute("Hiding", false)
 end
 end
 end})
@@ -568,8 +540,10 @@ Default = false,
 Callback = function(v)
 _G.Noclip = v
 game:GetService("RunService").RenderStepped:Connect(function()
+if _G.Noclip and not _G.SeekSpeed then
 game.Players.LocalPlayer.Character.Collision.CanCollide = not _G.Noclip
 game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = not _G.Noclip
+end
 end)
 end}):AddKeyPicker("Noclip", {
     Default = "N",
@@ -1094,7 +1068,7 @@ RemotesFolder.CamShake:Destroy()
 end})
 Camera:AddDivider()
 Camera:AddToggle("MyToggle",{
-Text = "Delete Darkness Effect",
+Text = "Ambient Bright",
 Default = false,
 Callback = function(v)
 _G.Fullbright = v
@@ -1102,7 +1076,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Fullbright then
 game.Lighting.Brightness = 0
 game.Lighting.GlobalShadows = false
-game.Lighting.OutdoorAmbient = Color3.new(1,1,1)
+game.Lighting.OutdoorAmbient = Color3.fromRGB(190, 190, 190)
 else
 game.Lighting.Brightness = 1
 game.Lighting.GlobalShadows = true
@@ -1240,7 +1214,7 @@ if v then
 local function setup(room)
 local Door = room:WaitForChild("Door"):WaitForChild("Door")
 task.wait(0.1)
-local DoorESP = LibraryESP:AddESP(Door, "Door", _G.DoorColorESP or Color3.fromRGB(0, 255, 0), 40, "DoorESP")
+local DoorESP = LibraryESP:AddESP(Door, "Door", _G.DoorColorESP or Color3.fromRGB(0, 255, 0), 20, "DoorESP")
 table.insert({},DoorESP)
 Door:WaitForChild("Open").Played:Connect(function()
 DoorESP:Destroy()
@@ -1269,13 +1243,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
-LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),40,"KeyESP")
+LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),20,"KeyESP")
 end		
 end					                
 KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
-LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),40,"KeyESP")
+LibraryESP:AddESP(v,"Key",_G.KeyColorESP or Color3.fromRGB(255, 255, 100),20,"KeyESP")
 end		
 end	
 end)
@@ -1295,17 +1269,17 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
-LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
+LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),20,"LeverGateESP")
 elseif v.Name == "TimerLever" then
-LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
+LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),20,"LeverGateESP")
 end		
 end					                
 LeverGateESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
-LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
+LibraryESP:AddESP(v,"Lever Gate",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),20,"LeverGateESP")
 elseif v.Name == "TimerLever" then
-LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),40,"LeverGateESP")
+LibraryESP:AddESP(v,"Timer Lever",_G.LeverColorESP or Color3.fromRGB(100, 100, 100),20,"LeverGateESP")
 end		
 end	
 end)
@@ -1325,13 +1299,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),40,"BookESP")
+LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),20,"BookESP")
 end		
 end					                
 BookESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),40,"BookESP")
+LibraryESP:AddESP(v,"Book",_G.BookColorESP or Color3.fromRGB(255, 100, 255),20,"BookESP")
 end		
 end			
 end)
@@ -1351,13 +1325,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
-LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),40,"BreakerESP")
+LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),20,"BreakerESP")
 end		
 end					                
 BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
-LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),40,"BreakerESP")
+LibraryESP:AddESP(v,"Breaker",_G.BreakerColorESP or Color3.fromRGB(100, 100, 100),20,"BreakerESP")
 end		
 end					
 end)
@@ -1377,13 +1351,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
-LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),40,"GeneratorESP")
+LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),20,"GeneratorESP")
 end		
 end					                
 GeneratorESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
-LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),40,"GeneratorESP")
+LibraryESP:AddESP(v,"Generator",_G.GeneratorColorESP or Color3.fromRGB(0, 255, 0),20,"GeneratorESP")
 end		
 end	
 end)
@@ -1403,13 +1377,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "DoorFake" then
-LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),40,"DupeESP")
+LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),20,"DupeESP")
 end		
 end					                
 DupeESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "DoorFake" then
-LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),40,"DupeESP")
+LibraryESP:AddESP(v,"Dupe",_G.DupeColorESP or Color3.fromRGB(255, 0, 0),20,"DupeESP")
 end		
 end			
 end)
@@ -1429,13 +1403,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesAnchor" then
-LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),20,"AnchorESP")
 end		
 end					                
 AnchorESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesAnchor" then
-LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),40,"AnchorESP")
+LibraryESP:AddESP(v,"Anchor",_G.AnchorColorESP or Color3.fromRGB(255, 255, 255),20,"AnchorESP")
 end		
 end			
 end)
@@ -1455,13 +1429,13 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "WaterPump" then
-LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),40,"PumpESP")
+LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),20,"PumpESP")
 end		
 end					                
 PumpESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "WaterPump" then
-LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),40,"PumpESP")
+LibraryESP:AddESP(v,"Water Pump",_G.WaterPumpColorESP or Color3.fromRGB(255, 0, 255),20,"PumpESP")
 end		
 end		
 end)
@@ -1481,17 +1455,17 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Rooms_Locker" then
-LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),40,"LockerESP")
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
-LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),40,"LockerESP")
+LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 end		
 end					                
 LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Rooms_Locker" then
-LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),40,"LockerESP")
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),20,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
-LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),40,"LockerESP")
+LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 end		
 end
 end)
@@ -1512,10 +1486,17 @@ _G.ItemESP = v
 if v then
 for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
+LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),20,"ItemESP")
 end
 end
 ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
+LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
+end
+end
+end)     
+ItemESP = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)].Assets.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
 LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
@@ -1581,8 +1562,9 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),40,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
 LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),40,"JeffESP")
-elseif v.Name == "Eyes" then
-LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
+elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
+LibraryESP:AddESP(v.Parent,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
+v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
 LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),40,"BlitzESP")
 v.Main.Transparency = 0
@@ -1620,8 +1602,8 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),40,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
 LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),40,"JeffESP")
-elseif v.Name == "Eyes" then
-LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
+elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
+LibraryESP:AddESP(v.Parent,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
 v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
 LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),40,"BlitzESP")
