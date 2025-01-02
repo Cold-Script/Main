@@ -9,9 +9,9 @@ local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lu
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
 Notification:Notify("Loading...")
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
-wait(5)
+wait(0.5)
 local Window = Library:CreateWindow({
-    Title = "• WinterClaws | " .. game.Players.LocalPlayer.Name .. " •",
+    Title = " awesome script | " .. game.Players.LocalPlayer.Name,
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -20,7 +20,6 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
-wait()
 local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
@@ -28,7 +27,6 @@ local Tabs = {
   Visual = Window:AddTab("Visual"),
   Config = Window:AddTab("Configs")
 }
-wait()
 local MainI = Tabs.Main:AddLeftTabbox()
 local Misc = MainI:AddTab("-Misc-")
 Misc:AddDropdown("MyDropdown",{
@@ -1039,8 +1037,8 @@ local VisualI = Tabs.Visual:AddLeftTabbox()
 local Camera = VisualI:AddTab("-Camera-")
 Camera:AddSlider("MySlider", {
     Text = "Field Of View",
-    Default = 70,
-    Min = 70,
+    Default = 80,
+    Min = 80,
     Max = 120,
     Rounding = 0,
     Compact = true,
@@ -1449,7 +1447,7 @@ end
 end
 end})
 ESP:AddToggle("MyToggle",{
-Text = "Lockers ESP (The Rooms)",
+Text = "Lockers ESP",
 Default = false,
 Callback = function(v)
 if v then               
@@ -1458,16 +1456,20 @@ if v.Name == "Rooms_Locker" then
 LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
 LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
+elseif v.Name == "Locker_Large" then
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 end		
 end					                
 LockerESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)                       
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Rooms_Locker" then
-LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 250, 0),20,"LockerESP")
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 elseif v.Name == "Rooms_Locker_Fridge" then
 LibraryESP:AddESP(v,"Locker Fridge",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
+elseif v.Name == "Locker_Large" then
+LibraryESP:AddESP(v,"Locker",_G.RoomLockerColorESP or Color3.fromRGB(0, 255, 0),20,"LockerESP")
 end		
-end
+end		
 end)
 else
 LockerESP:Disconnect()
@@ -1492,16 +1494,18 @@ end
 ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
+LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),20,"ItemESP")
 end
 end
-end)     
-ItemESP = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)].Assets.ChildAdded:Connect(function(v)
+end)   
+ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
+ItemESP = v.Assets.DescendantAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
 if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),40,"ItemESP")
+LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),20,"ItemESP")
 end
 end
+end)
 end)     
 repeat task.wait() until not _G.ItemESP
 ItemESP:Disconnect()     
@@ -1555,86 +1559,98 @@ Callback = function(v)
 if v then               
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
-LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),40,"RushESP")
+LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),20,"RushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "AmbushMoving" then
-LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),40,"AmbushESP")
+LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),20,"AmbushESP")
+v.RushNew.Transparency = 0
+elseif v.Name == "GlitchAmbush" then
+LibraryESP:AddESP(v,"Ambush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
+v.RushNew.Transparency = 0
+elseif v.Name == "GlitchRush" then
+LibraryESP:AddESP(v,"Rush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
-LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),40,"JeffESP")
+LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),20,"JeffESP")
 elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
-LibraryESP:AddESP(v.Parent,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
+LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),20,"EyesESP")
 v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
-LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),40,"BlitzESP")
+LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),20,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
-LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),40,"LookmanESP")
+LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),20,"LookmanESP")
 elseif v.Name == "FigureRig" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),20,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),20,"FigureESP")
 elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),40,"GiggleESP")
+LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),20,"GiggleESP")
 elseif v.Name == "Grumbo" then
-LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),40,"GrumbleESP")
+LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),20,"GrumbleESP")
 elseif v.Name == "A60" then
-LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),40,"A60ESP")
+LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),20,"A60ESP")
 v.Main.Transparency = 0
 elseif v.Name == "A120" then
-LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),40,"A120ESP")
+LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),20,"A120ESP")
 v.Main.Transparency = 0
 elseif v.Name == "Dread" then
-LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),40,"DreadESP")
+LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),20,"DreadESP")
 v.Main.Transparency = 0
 elseif v.Name == "Drakobloxxer" then
-LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),40,"DrakoESP")
+LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),20,"DrakoESP")
 end		
 end					                
 EntityESP = workspace.ChildAdded:Connect(function(v)    
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
 if v:IsDescendantOf(workspace) then
 if v.Name == "RushMoving" then
-LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),40,"RushESP")
+LibraryESP:AddESP(v,"Rush",Color3.fromRGB(100, 100, 100),20,"RushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "AmbushMoving" then
-LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),40,"AmbushESP")
+LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),20,"AmbushESP")
+v.RushNew.Transparency = 0
+elseif v.Name == "GlitchAmbush" then
+LibraryESP:AddESP(v,"Ambush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
+v.RushNew.Transparency = 0
+elseif v.Name == "GlitchRush" then
+LibraryESP:AddESP(v,"Rush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
-LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),40,"JeffESP")
+LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),20,"JeffESP")
 elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
-LibraryESP:AddESP(v.Parent,"Eyes",Color3.fromRGB(0, 0, 255),40,"EyesESP")
+LibraryESP:AddESP(v,"Eyes",Color3.fromRGB(0, 0, 255),20,"EyesESP")
 v.Core.Transparency = 0
 elseif v.Name == "BackdoorRush" then
-LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),40,"BlitzESP")
+LibraryESP:AddESP(v,"Blitz",Color3.fromRGB(255, 0, 0),20,"BlitzESP")
 v.Main.Transparency = 0
 elseif v.Name == "BackdoorLookman" then
-LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),40,"LookmanESP")
+LibraryESP:AddESP(v,"Lookman",Color3.fromRGB(150, 0, 0),20,"LookmanESP")
 v.Core.Transparency = 0
 elseif v.Name == "A60" then
-LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),40,"A60ESP")
+LibraryESP:AddESP(v,"A60",Color3.fromRGB(255, 0, 0),20,"A60ESP")
 v.Main.Transparency = 0
 elseif v.Name == "A120" then
-LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),40,"A120ESP")
+LibraryESP:AddESP(v,"A120",Color3.fromRGB(255, 255, 255),20,"A120ESP")
 v.Main.Transparency = 0
 elseif v.Name == "Dread" then
-LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),40,"DreadESP")
+LibraryESP:AddESP(v,"Dread",Color3.fromRGB(0, 255, 255),20,"DreadESP")
 v.Main.Transparency = 0
 elseif v.Name == "Drakobloxxer" then
-LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),40,"DrakoESP")
+LibraryESP:AddESP(v,"Drakobloxxer",Color3.fromRGB(255, 0, 0),20,"DrakoESP")
 end		
 end						
 end)
 EntityESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "FigureRig" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),20,"FigureESP")
 elseif v.Name == "FigureRagdoll" then
-LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),40,"FigureESP")
+LibraryESP:AddESP(v,"Figure",Color3.fromRGB(255, 0, 0),20,"FigureESP")
 elseif v.Name == "GiggleCeiling" then
-LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),40,"GiggleESP")
+LibraryESP:AddESP(v,"Giggle",Color3.fromRGB(255, 255, 255),20,"GiggleESP")
 elseif v.Name == "Grumbo" then
-LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),40,"GrumbleESP")
+LibraryESP:AddESP(v,"Grumble",Color3.fromRGB(255, 255, 255),20,"GrumbleESP")
 end
 end
 end)
