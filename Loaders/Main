@@ -1,4 +1,7 @@
-print("Nếu Bạn Đọc Được Thư Này Thì Chúc Mừng Năm Mới 🎆")
+if game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
+game:GetService("ReplicatedStorage").EntityInfo.Name = "RemotesFolder"
+end
+local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
@@ -7,12 +10,8 @@ local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 Notification:Notify("Loading...")
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
 wait(0.5)
-if game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
-game:GetService("ReplicatedStorage").EntityInfo.Name = "RemotesFolder"
-end
-RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
 local Window = Library:CreateWindow({
-    Title = "YOUHUB | " .. game.Players.LocalPlayer.Name,
+    Title = "YOUHUB | v5 | " .. game.Players.LocalPlayer.Name,
     Center = true,
     AutoShow = true,
     Resizable = true,
