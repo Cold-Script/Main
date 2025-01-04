@@ -1,7 +1,12 @@
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
-game:GetService("ReplicatedStorage").EntityInfo.Name = "RemotesFolder"
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+local RemotesFolder = game:GetService("ReplicatedStorage").EntityInfo
 end
+if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and not game:GetService("ReplicatedStorage").Bricks then
 local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
+end
+if game:GetService("ReplicatedStorage").Bricks then
+local RemotesFolder = game:GetService("ReplicatedStorage").Bricks
+end
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
@@ -11,7 +16,7 @@ Notification:Notify("Loading...")
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
 wait(0.5)
 local Window = Library:CreateWindow({
-    Title = " awesome script | " .. game.Players.LocalPlayer.Name,
+    Title = "YOUHUB | " .. game.Players.LocalPlayer.Name,
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -162,26 +167,71 @@ Text = "Auto Padlock Unlock",
 Default = false,
 Callback = function(v)
 _G.AutoPadlock = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AutoPadlock then
-local Padlock = workspace.CurrentRooms["50"].Door:FindFirstChild("Padlock")
-if Padlock then
-if (game.Players.LocalPlayer.Character.Collision.Position - Padlock.Main.Position).Magnitude < _G.PadlockDistance then
-RemotesFolder.PL:FireServer()
+while _G.AutoPadlock then wait(1)
+local Floor = game:GetService("ReplicatedStorage").GameData.Floor
+local Paper = workspace:FindFirstChild("LibraryHintPaper",true) or workspace:FindFirstChild("LibraryHintPaperHard",true) or Players:FindFirstChild("LibraryHintPaper",true) or Players:FindFirstChild("LibraryHintPaperHard",true)
+if not Paper then
+print("Needed Paper")
+return
+end
+local HintsNeeded = Floor.Value == "Fools" and 8 or 3
+local Hints = 0
+for _,Collected in pairs(game.Players.LocalPlayer.PlayerGui.PermUI.Hints:GetChildren()) do
+if Collected.Name == "Icon" then
+if Collected:IsA("ImageLabel") then
+for _,Icon in pairs(Paper.UI:GetChildren()) do
+if tonumber(Icon.Name) then
+if Icon.ImageRectOffset == Collected.ImageRectOffset then
+Hints += 1
 end
 end
 end
-end)
-end})
-Automation:AddSlider("MySlider",{
-Text = "Padlock Distance",
-Min = 50,
-Default = 50,
-Max = 100,
-Rounding = 1,
-Compact = true,
-Callback = function(v)
-_G.PadlockDistance = v
+end
+end
+end
+if Hints < HintsNeeded then
+print("Need Books")
+return
+end
+local t = {}
+for i = 1, Floor.Value == "Hotel" and 5 or 10 do
+local Icon = Paper.UI[i]
+local Number = -1
+for _,Collected in pairs(game.Players.LocalPlayer.PlayerGui.PermUI.Hints:GetChildren()) do
+if Collected.Name == "Icon" then
+if Collected.ImageRectOffset == Icon.ImageRectOffset then
+Number = tonumber(Collected.TextLabel.Text)
+end
+end
+end
+table.insert(t,Number)
+end
+for one=0,t[1]==-1 and 9 or 0 do
+for two=0,t[2]==-1 and 9 or 0 do
+for three=0,t[3]==-1 and 9 or 0 do
+for four=0,t[4]==-1 and 9 or 0 do
+for five=0,t[5]==-1 and 9 or 0 do
+if Floor.Value == "Fools" then
+for six=0,t[6]==-1 and 9 or 0 do
+for seven=0,t[7]==-1 and 9 or 0 do
+for eight=0,t[8]==-1 and 9 or 0 do
+for nine=0,t[9]==-1 and 9 or 0 do
+for ten=0,t[10]==-1 and 9 or 0 do
+RemotesFolder.PL:FireServer((t[1]==-1 and one or t[1])..(t[2]==-1 and two or t[2])..(t[3]==-1 and three or t[3])..(t[4]==-1 and four or t[4])..(t[5]==-1 and five or t[5])..(t[6]==-1 and six or t[6])..(t[7]==-1 and seven or t[7])..(t[8]==-1 and eight or t[8])..(t[9]==-1 and nine or t[9])..(t[10]==-1 and ten or t[10]))
+end
+end
+end
+end
+end
+else
+RemotesFolder.PL:FireServer((t[1]==-1 and one or t[1])..(t[2]==-1 and two or t[2])..(t[3]==-1 and three or t[3])..(t[4]==-1 and four or t[4])..(t[5]==-1 and five or t[5]))
+end
+end
+end
+end
+end
+end
+end
 end})
 Automation:AddDivider()
 Automation:AddButton({
@@ -212,7 +262,7 @@ local MainII = Tabs.Main:AddRightTabbox()
 local World = MainII:AddTab("-World-")
 game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
 if _G.ClosetsExitFix and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
-game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()
+RemotesFolder.CamLock:FireServer()
 end 
 end)
 World:AddToggle("MyToggle",{
@@ -248,8 +298,9 @@ end
 end
 end
 end})
+if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro" then
 World:AddToggle("MyToggle",{
-Text = "Blur Move Button (Mobile)",
+Text = "Blur Move Button",
 Default = false,
 Callback = function(v)
 _G.InvisMouseButton = v
@@ -263,6 +314,7 @@ InvisMouseButton:Disconnect()
 game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = true
 end
 end})
+end
 World:AddDivider()
 World:AddToggle("MyToggle",{
 Text = "Delete Live Sanity",
@@ -389,6 +441,26 @@ Sound.Volume = _G.AlertVolume
 Sound.PlayOnRemove = true
 Sound:Destroy()
 end
+elseif v.Name == "GlitchRush" then
+Notification:Notify("Glitch Rush has spawn,\nfind the closets hiding!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
+elseif v.Name == "GlitchAmbush" then
+Notification:Notify("Glitch Ambush has spawn,\nfind the closets hiding!")
+if _G.SoundAlert then
+local Sound = Instance.new("Sound")
+Sound.Parent = game.SoundService
+Sound.SoundId = "rbxassetid://4590657391"
+Sound.Volume = _G.AlertVolume
+Sound.PlayOnRemove = true
+Sound:Destroy()
+end
 elseif v.Name == "SeekMoving" then
 Notification:Notify("Seek Chase,\ngoodluck for you in chase!")
 if _G.SoundAlert then
@@ -461,16 +533,21 @@ end
 end)
 end})
 Character:AddToggle("MyToggle",{
-Text = "Running Seek Speed",
+Text = "Seek Speed",
 Default = false,
 Callback = function(v)
 _G.SeekSpeed = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.SeekSpeed then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 20
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 20.5
 end
 end)
-end})
+end}):AddKeyPicker("Noclip", {
+    Default = "F",
+    Text = "Seek Speed",
+    Mode = Library.IsMobile and "Toggle",
+    SyncToggleState = Library.IsMobile,
+})
 Character:AddDivider()
 Character:AddToggle("MyToggle",{
 Text = "Instance Interact",
@@ -902,7 +979,7 @@ Callback = function(v)
 _G.AntiDread = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AntiDread then
-RemotesFolder.Dread:FireServer("_Dread")
+RemotesFolder.Dread:FireServer(false)
 else
 RemotesFolder.Dread:FireServer(true)
 end
@@ -982,6 +1059,55 @@ else
 AntiDrakobloxxer:Disconnect()
 end
 end})
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+Anti:AddDivider()
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Banana",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Banana" then
+v:Destroy()
+end
+end
+AntiBanana = workspace.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Banana" then
+v:Destroy()
+end
+end
+end)
+else
+AntiBanana:Disconnect()
+end
+end})
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Jeff",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Parent.Name == "JeffTheKiller" then
+v.CanTouch = false
+wait(1)
+v:Destroy()
+end
+end
+AntiJeff = workspace.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Parent.Name == "JeffTheKiller" then
+v.CanTouch = false
+wait(1)
+v:Destroy()
+end
+end
+end)
+else
+AntiJeff:Disconnect()
+end
+end})
+end
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
 local Troll = ExploitsII:AddTab("-Troll-")
 Troll:AddToggle("MyToggle",{
@@ -1052,9 +1178,9 @@ Callback = function(v)
 _G.Field = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Field then
-workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 70
+workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 80
 else
-workspace.CurrentCamera.FieldOfView = 70
+workspace.CurrentCamera.FieldOfView = 80
 end
 end)
 end})
@@ -1097,6 +1223,16 @@ if not fog:GetAttribute("Density") then fog:SetAttribute("Density", fog.Density)
 fog.Density = v and 0 or fog:GetAttribute("Density")
 end
 end)
+end})
+Camera:AddToggle("MyToggle",{
+Text = "Delete Skybox",
+Default = false,
+Callback = function(v)
+if v then
+workspace.Camera.SkyboxPart.Transparency = 1
+else
+workspace.Camera.SkyboxPart.Transparency = 0
+end
 end})
 local FPS = VisualI:AddTab("-FPS-")
 FPS:AddToggle("MyToggle",{
@@ -1447,6 +1583,48 @@ end
 end
 end})
 ESP:AddToggle("MyToggle",{
+Text = "Chest ESP",
+Default = false,
+Callback = function(v)
+if v then               
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "ChestBoxLocked" then
+LibraryESP:AddESP(v,"Chest [Locked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "ChestBox" then
+LibraryESP:AddESP(v,"Chest [Unlocked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "Chest_Vine" then
+LibraryESP:AddESP(v,"Chest [Locked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "Toolbox" then
+LibraryESP:AddESP(v,"Toolbox [Unlocked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "ToolboxLocked" then
+LibraryESP:AddESP(v,"Toolbox [Locked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+end		
+end					                
+ChestESP = workspace.CurrentRooms.ChildAdded:Connect(function(child)                       
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "ChestBoxLocked" then
+LibraryESP:AddESP(v,"Chest [Locked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "ChestBox" then
+LibraryESP:AddESP(v,"Chest [Unlocked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "Chest_Vine" then
+LibraryESP:AddESP(v,"Chest [Locked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "Toolbox" then
+LibraryESP:AddESP(v,"Toolbox [Unlocked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+elseif v.Name == "ToolboxLocked" then
+LibraryESP:AddESP(v,"Toolbox [Locked]",_G.ChestColorESP or Color3.fromRGB(0, 255, 255),20,"ChestESP")
+end		
+end			
+end)
+else
+ChestESP:Disconnect()
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "ChestESP" then
+v:Destroy()
+end
+end
+end
+end})
+ESP:AddToggle("MyToggle",{
 Text = "Lockers ESP",
 Default = false,
 Callback = function(v)
@@ -1481,38 +1659,6 @@ end
 end
 end})
 ESP:AddToggle("MyToggle",{
-Text = "Items ESP",
-Default = false,
-Callback = function(v)
-_G.ItemESP = v
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),20,"ItemESP")
-end
-end
-ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),20,"ItemESP")
-end
-end
-end)   
-ItemESP = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-ItemESP = v.Assets.DescendantAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-LibraryESP:AddESP(v,v.Name,_G.ItemsColorESP or Color3.fromRGB(0, 255, 0),20,"ItemESP")
-end
-end
-end)
-end)     
-repeat task.wait() until not _G.ItemESP
-ItemESP:Disconnect()     
-LibraryESP:Delete("ItemESP")
-end
-end})
-ESP:AddToggle("MyToggle",{
 Text = "Gold ESP",
 Default = false,
 Callback = function(v)
@@ -1522,8 +1668,8 @@ local function check(v)
 if v:IsA("Model") and v.Name == "GoldPile" then
 task.wait(0.1)
 local Hitbox = v:WaitForChild("Hitbox")
-local DoorESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",_G.GoldColorESP or Color3.fromRGB(255,255,0),40,"GoldESP")
-table.insert({},DoorESP)
+local GoldESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",_G.GoldColorESP or Color3.fromRGB(255,255,0),20,"GoldESP")
+table.insert({},GoldESP)
 end
 end
 local function setup(room)
@@ -1566,10 +1712,10 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),20,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "GlitchAmbush" then
 LibraryESP:AddESP(v,"Ambush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
-v.RushNew.Transparency = 0
+v.Main.Transparency = 0
 elseif v.Name == "GlitchRush" then
 LibraryESP:AddESP(v,"Rush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
-v.RushNew.Transparency = 0
+v.Main.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
 LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),20,"JeffESP")
 elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
@@ -1612,10 +1758,10 @@ LibraryESP:AddESP(v,"Ambush",Color3.fromRGB(0, 255, 0),20,"AmbushESP")
 v.RushNew.Transparency = 0
 elseif v.Name == "GlitchAmbush" then
 LibraryESP:AddESP(v,"Ambush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
-v.RushNew.Transparency = 0
+v.Main.Transparency = 0
 elseif v.Name == "GlitchRush" then
 LibraryESP:AddESP(v,"Rush (Glitch)",Color3.fromRGB(255, 0, 0),20,"AmbushESP")
-v.RushNew.Transparency = 0
+v.Main.Transparency = 0
 elseif v.Name == "JeffTheKiller" then
 LibraryESP:AddESP(v,"Jeff",Color3.fromRGB(255, 255, 255),20,"JeffESP")
 elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
@@ -1742,12 +1888,12 @@ ESPColor:AddLabel("Rooms Locker ESP"):AddColorPicker('ColorPicker',{
 	Callback = function(v)
 _G.RoomLockerColorESP = v
 end})
-ESPColor:AddLabel("Items ESP"):AddColorPicker('ColorPicker',{
-	Default = Color3.fromRGB(0, 255, 0),
-	Title = 'Items ESP',
+ESPColor:AddLabel("Chest ESP"):AddColorPicker('ColorPicker',{
+	Default = Color3.fromRGB(0, 255, 255),
+	Title = 'Chest ESP',
 	Transparency = 0,
 	Callback = function(v)
-_G.ItemsColorESP = v
+_G.ChestColorESP = v
 end})
 ESPColor:AddLabel("Gold ESP"):AddColorPicker('ColorPicker',{
 	Default = Color3.fromRGB(255, 255, 0),
