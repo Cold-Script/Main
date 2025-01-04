@@ -1,11 +1,8 @@
 if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
 local RemotesFolder = game:GetService("ReplicatedStorage").EntityInfo
 end
-if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and not game:GetService("ReplicatedStorage").Bricks.Name == "Bricks" then
+if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
 local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
-end
-if game:GetService("ReplicatedStorage").Bricks.Name == "Bricks" then
-local RemotesFolder = game:GetService("ReplicatedStorage").Bricks
 end
 print("Nếu Bạn Đọc Được Thư Này Thì Chúc Mừng Năm Mới 🎆")
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
