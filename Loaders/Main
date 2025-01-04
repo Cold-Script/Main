@@ -7,11 +7,10 @@ local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 Notification:Notify("Loading...")
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
 wait(0.5)
-if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
-RemotesFolder = game:GetService("ReplicatedStorage"):WaitForChild("RemotesFolder")
-else
-RemotesFolder = game:GetService("ReplicatedStorage"):WaitForChild("EntityInfo")
+if game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
+game:GetService("ReplicatedStorage").EntityInfo.Name = "RemotesFolder"
 end
+RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
 local Window = Library:CreateWindow({
     Title = "YOUHUB | " .. game.Players.LocalPlayer.Name,
     Center = true,
