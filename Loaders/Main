@@ -7,9 +7,8 @@ local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
 local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
-Notification:Notify("Loading...")
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
-wait(0.5)
+wait()
 local Window = Library:CreateWindow({
     Title = "YOUHUB | v5 | " .. game.Players.LocalPlayer.Name,
     Center = true,
@@ -20,6 +19,7 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
+Notification:Notify("Loaded!")
 local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
@@ -289,7 +289,6 @@ end
 end
 end
 end})
-if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Retro" then
 World:AddToggle("MyToggle",{
 Text = "Blur Move Button",
 Default = false,
@@ -305,7 +304,6 @@ InvisMouseButton:Disconnect()
 game:GetService("Players").LocalPlayer.PlayerGui.TouchGui.TouchControlFrame.Visible = true
 end
 end})
-end
 World:AddDivider()
 World:AddToggle("MyToggle",{
 Text = "Delete Live Sanity",
@@ -1050,7 +1048,6 @@ else
 AntiDrakobloxxer:Disconnect()
 end
 end})
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
 Anti:AddDivider()
 Anti:AddToggle("MyToggle",{
 Text = "Anti-Banana",
@@ -1098,7 +1095,6 @@ else
 AntiJeff:Disconnect()
 end
 end})
-end
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
 local Troll = ExploitsII:AddTab("-Troll-")
 Troll:AddToggle("MyToggle",{
@@ -1654,39 +1650,16 @@ Text = "Gold ESP",
 Default = false,
 Callback = function(v)
 _G.GoldESP = v
-if v then
-local function check(v)
-if v:IsA("Model") and v.Name == "GoldPile" then
-task.wait(0.1)
-local Hitbox = v:WaitForChild("Hitbox")
-local GoldESP = LibraryESP:AddESP(v,"Gold (".. tostring(v:GetAttribute("GoldValue")).."$)",_G.GoldColorESP or Color3.fromRGB(255,255,0),20,"GoldESP")
-table.insert({},GoldESP)
+while wait(1) do
+if _G.GoldPile then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "GoldPile" and v:FindFirstChild("GoldESP")
+LibraryESP:AddESP(v,"Gold [" .. v:GetAttribute("GoldValue") .. "]",_G.GoldColorESP or Color3.fromRGB(0, 255, 0),20,"GoldESP")
 end
 end
-local function setup(room)
-local assets = room:WaitForChild("Assets")
-GoldESP = assets.DescendantAdded:Connect(function(v)
-check(v) 
-end)
-for i,v in pairs(assets:GetDescendants()) do
-check(v)
-end         
-task.spawn(function()
-repeat task.wait() until not _G.GoldESP
-GoldESP:Disconnect()  
-end)  
-end       
-GoldESP = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-setup(room)
-end)
-for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-if room:FindFirstChild("Assets") then
-setup(room) 
+else
+
 end
-end       
-repeat task.wait() until not _G.GoldESP
-GoldESP:Disconnect()
-LibraryESP:Delete("GoldESP")
 end
 end})
 ESP:AddToggle("MyToggle",{
