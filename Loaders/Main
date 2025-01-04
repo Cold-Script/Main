@@ -1658,7 +1658,7 @@ LibraryESP:AddESP(v,"Gold [" .. v:GetAttribute("GoldValue") .. "]",_G.GoldColorE
 end
 end
 else
-
+LibraryESP:Delete("GoldESP")
 end
 end
 end})
