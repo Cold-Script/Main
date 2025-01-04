@@ -1,9 +1,3 @@
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
-local RemotesFolder = game:GetService("ReplicatedStorage").EntityInfo
-end
-if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
-local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
-end
 print("Nếu Bạn Đọc Được Thư Này Thì Chúc Mừng Năm Mới 🎆")
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
@@ -13,6 +7,11 @@ local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 Notification:Notify("Loading...")
 local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
 wait(0.5)
+if not game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+RemotesFolder = game:GetService("ReplicatedStorage"):WaitForChild("RemotesFolder")
+else
+RemotesFolder = game:GetService("ReplicatedStorage"):WaitForChild("EntityInfo")
+end
 local Window = Library:CreateWindow({
     Title = "YOUHUB | " .. game.Players.LocalPlayer.Name,
     Center = true,
@@ -160,12 +159,9 @@ end
 end)
 end})
 Automation:AddDivider()
-Automation:AddToggle("MyToggle",{
+Automation:AddButton({
 Text = "Auto Padlock Unlock",
-Default = false,
-Callback = function(v)
-_G.AutoPadlock = v
-while _G.AutoPadlock do wait(1)
+Func = function(v)
 local Floor = game:GetService("ReplicatedStorage").GameData.Floor
 local Paper = workspace:FindFirstChild("LibraryHintPaper",true) or workspace:FindFirstChild("LibraryHintPaperHard",true) or Players:FindFirstChild("LibraryHintPaper",true) or Players:FindFirstChild("LibraryHintPaperHard",true)
 if not Paper then
@@ -223,7 +219,6 @@ end
 end
 else
 RemotesFolder.PL:FireServer((t[1]==-1 and one or t[1])..(t[2]==-1 and two or t[2])..(t[3]==-1 and three or t[3])..(t[4]==-1 and four or t[4])..(t[5]==-1 and five or t[5]))
-end
 end
 end
 end
