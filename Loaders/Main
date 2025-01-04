@@ -1,4 +1,4 @@
-if game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
 game:GetService("ReplicatedStorage").EntityInfo.Name = "RemotesFolder"
 end
 local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
