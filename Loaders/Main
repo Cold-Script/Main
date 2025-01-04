@@ -442,7 +442,7 @@ Sound.PlayOnRemove = true
 Sound:Destroy()
 end
 elseif v.Name == "GlitchRush" then
-Notification:Notify("Glitch Rush has spawn,\nfind the closets hiding!")
+Notification:Notify("Entity 'Glitch Rush' has spawn,\nfind the closets hiding!")
 if _G.SoundAlert then
 local Sound = Instance.new("Sound")
 Sound.Parent = game.SoundService
@@ -452,7 +452,7 @@ Sound.PlayOnRemove = true
 Sound:Destroy()
 end
 elseif v.Name == "GlitchAmbush" then
-Notification:Notify("Glitch Ambush has spawn,\nfind the closets hiding!")
+Notification:Notify("Entity 'Glitch Ambush' has spawn,\nfind the closets hiding!")
 if _G.SoundAlert then
 local Sound = Instance.new("Sound")
 Sound.Parent = game.SoundService
@@ -542,7 +542,7 @@ if _G.SeekSpeed then
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 20.5
 end
 end)
-end}):AddKeyPicker("Noclip", {
+end}):AddKeyPicker("SeekSpeed", {
     Default = "F",
     Text = "Seek Speed",
     Mode = Library.IsMobile and "Toggle",
