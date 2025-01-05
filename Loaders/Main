@@ -821,7 +821,7 @@ Default = false,
 Callback = function(v)
 _G.BlurBody = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if _G.BlurBody theb
+if _G.BlurBody then
 game.Players.LocalPlayer.Character.Head.Material = "ForceField"
 game.Players.LocalPlayer.Character.UpperTorso.Material = "ForceField"
 game.Players.LocalPlayer.Character.RightHand.Material = "ForceField"
