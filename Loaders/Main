@@ -1,7 +1,4 @@
-local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
-if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
-local RemotesFolder = game:GetService("ReplicatedStorage").EntityInfo
-end
+local RemotesFolder = _G.RemotesFolder
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
@@ -19,7 +16,6 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
-Notification:Notify("Loaded!")
 local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
