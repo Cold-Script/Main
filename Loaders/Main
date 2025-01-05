@@ -817,9 +817,8 @@ Text = "Blur Body",
 Default = false,
 Callback = function(v)
 _G.BlurBody = v
-game:GetService("RunService").RenderStepped:Connect(function()
+while _G.BlurBody do wait(1)
 if _G.BlurBody then
-if not game.Players.LocalPlayer.Character.Head.Material = "ForceField" then
 game.Players.LocalPlayer.Character.Head.Material = "ForceField"
 game.Players.LocalPlayer.Character.UpperTorso.Material = "ForceField"
 game.Players.LocalPlayer.Character.RightHand.Material = "ForceField"
@@ -835,9 +834,7 @@ game.Players.LocalPlayer.Character.RightFoot.Material = "ForceField"
 game.Players.LocalPlayer.Character.LeftFoot.Material = "ForceField"
 game.Players.LocalPlayer.Character.LeftHand.Material = "ForceField"
 game.Players.LocalPlayer.Character.LeftLowerArm.Material = "ForceField"
-end
 else
-if game.Players.LocalPlayer.Character.Head.Material = "ForceField" then
 game.Players.LocalPlayer.Character.Head.Material = "Plastic"
 game.Players.LocalPlayer.Character.UpperTorso.Material = "Plastic"
 game.Players.LocalPlayer.Character.RightHand.Material = "Plastic"
@@ -855,9 +852,7 @@ game.Players.LocalPlayer.Character.LeftHand.Material = "Plastic"
 game.Players.LocalPlayer.Character.LeftLowerArm.Material = "Plastic"
 end
 end
-end)
 end})
-
 local ExploitsI = Tabs.Exploits:AddLeftTabbox()
 local Anti = ExploitsI:AddTab("-Anti-")
 game:GetService("RunService").RenderStepped:Connect(function()
@@ -1420,6 +1415,35 @@ end}):AddColorPicker("MyColor",{
 Default = Color3.new(0, 1, 0),
 Callback = function(v)
 _G.DoorColorESP = v
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Key ESP",
+Default = false,
+Callback = function(v)
+_G.KeyESP = v
+while wait(1) do
+if _G.KeyESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "KeyObtain" then
+if not v:FindFirstChild("KeyESP") then
+LibraryESP:AddESP(v, "Key", _G.KeyColorESP or Color3.new(1, 1, 0), 20, "KeyESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "KeyObtain" then
+if v:FindFirstChild("KeyESP") then
+v:FindFirstChild("KeyESP"):Destroy()
+end
+end
+end
+end
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.new(1, 1, 0),
+Callback = function(v)
+_G.KeyColorESP = v
 end})
 
 
