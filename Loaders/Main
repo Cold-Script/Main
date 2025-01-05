@@ -1452,7 +1452,7 @@ end
 else
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-if not v:FindFirstChild("BookESP") then
+if v:FindFirstChild("BookESP") then
 v:FindFirstChild("BookESP"):Destroy()
 end
 end
@@ -1481,7 +1481,7 @@ end
 else
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
-if not v:FindFirstChild("BreakerESP") then
+if v:FindFirstChild("BreakerESP") then
 v:FindFirstChild("BreakerESP"):Destroy()
 end
 end
@@ -1510,7 +1510,7 @@ end
 else
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "FuseObtain" then
-if not v:FindFirstChild("FuseESP") then
+if v:FindFirstChild("FuseESP") then
 v:FindFirstChild("FuseESP"):Destroy()
 end
 end
@@ -1539,7 +1539,7 @@ end
 else
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
-if not v:FindFirstChild("GeneratorESP") then
+if v:FindFirstChild("GeneratorESP") then
 v:FindFirstChild("GeneratorESP"):Destroy()
 end
 end
