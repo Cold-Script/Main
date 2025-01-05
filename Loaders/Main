@@ -1401,7 +1401,7 @@ if _G.DoorESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
 if not v:FindFirstChild("DoorESP") then
-LibraryESP:AddESP(v, "Door", Color3.new(0, 1, 0), 20, "DoorESP")
+LibraryESP:AddESP(v, "Door", _G.DoorColorESP or Color3.new(0, 1, 0), 20, "DoorESP")
 end
 end
 end
@@ -1409,12 +1409,16 @@ else
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
 if v:FindFirstChild("DoorESP") then
-v:Destroy()
+v:FindFirstChild("DoorESP"):Destroy()
 end
 end
 end
 end
 end
+end}):AddColorPicker("MyColor",{
+Default = Color3.new(0, 1, 0),
+Callback = function(v)
+_G.DoorColorESP = v
 end})
 
 
