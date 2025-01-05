@@ -1494,7 +1494,6 @@ else
 BreakerESP:Disconnect()
 LibraryESP:Delete("BreakerESP")
 end
-end
 end}):AddColorPicker("MyColor",{
 Default = Color3.fromRGB(255, 130, 0),
 Callback = function(v)
