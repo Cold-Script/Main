@@ -1435,8 +1435,64 @@ Default = Color3.new(0, 1, 0),
 Callback = function(v)
 _G.LeverColorESP = v
 end})
-
-
+ESP:AddToggle("MyToggle",{
+Text = "Book ESP",
+Default = false,
+Callback = function(v)
+_G.BookESP = v
+while wait(1) do
+if _G.BookESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+if not v:FindFirstChild("BookESP") then
+LibraryESP:AddESP(v, "Book", _G.BookColorESP or Color3.fromRGB(50, 230, 20), 20, "BookESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+if not v:FindFirstChild("BookESP") then
+v:FindFirstChild("BookESP"):Destroy()
+end
+end
+end
+end
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.fromRGB(50, 230, 20),
+Callback = function(v)
+_G.BookColorESP = v
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Breaker ESP",
+Default = false,
+Callback = function(v)
+_G.BreakerESP = v
+while wait(1) do
+if _G.BreakerESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+if not v:FindFirstChild("BreakerESP") then
+LibraryESP:AddESP(v, "Breaker", _G.BreakerColorESP or Color3.fromRGB(255, 130, 0), 20, "BookESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+if not v:FindFirstChild("BreakerESP") then
+v:FindFirstChild("BreakerESP"):Destroy()
+end
+end
+end
+end
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.fromRGB(255, 130, 0),
+Callback = function(v)
+_G.BreakerColorESP = v
+end})
 
 
 
