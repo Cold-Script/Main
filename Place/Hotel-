@@ -1,0 +1,2 @@
+_G.RemotesFolder = game.ReplicatedStorage.Bricks
+loadstring(game:HttpGet("https://github.com/Cold-Script/Main/blob/main/Loaders/Main?raw=true"))()
