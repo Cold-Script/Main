@@ -792,6 +792,71 @@ end}):AddKeyPicker("Noclip", {
     Mode = Library.IsMobile and "Toggle",
     SyncToggleState = Library.IsMobile,
 })
+local PlayersIII = Tabs.Players:AddRightTabbox()
+local Body = PlayersIII:AddTab("-Body-")
+Body:AddLabel("Body Color"):AddColorPicker("Body Color",{
+Default = Color3.new(1, 1, 1),
+Callback = function(v)
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Head.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.UpperTorso.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightHand.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightLowerArm.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightLowerLeg.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightUpperArm.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightUpperLeg.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftLowerLeg.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftUpperArm.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftUpperLeg.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LowerTorso.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.RightFoot.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftFoot.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftHand.Color = v or Color3.new(1,1,1)
+game.Players.LocalPlayer.Character.LeftLowerArm.Color = v or Color3.new(1,1,1)
+end)
+end})
+Body:AddToggle("MyToggle",{
+Text = "Blur Body",
+Default = false,
+Callback = function(v)
+_G.BlurBody = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.BlurBody theb
+game.Players.LocalPlayer.Character.Head.Material = "ForceField"
+game.Players.LocalPlayer.Character.UpperTorso.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightHand.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightLowerArm.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightLowerLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightUpperArm.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightUpperLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftLowerLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftUpperArm.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftUpperLeg.Material = "ForceField"
+game.Players.LocalPlayer.Character.LowerTorso.Material = "ForceField"
+game.Players.LocalPlayer.Character.RightFoot.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftFoot.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftHand.Material = "ForceField"
+game.Players.LocalPlayer.Character.LeftLowerArm.Material = "ForceField"
+else
+game.Players.LocalPlayer.Character.Head.Material = "Plastic"
+game.Players.LocalPlayer.Character.UpperTorso.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightHand.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightLowerArm.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightLowerLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightUpperArm.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightUpperLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftLowerLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftUpperArm.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftUpperLeg.Material = "Plastic"
+game.Players.LocalPlayer.Character.LowerTorso.Material = "Plastic"
+game.Players.LocalPlayer.Character.RightFoot.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftFoot.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftHand.Material = "Plastic"
+game.Players.LocalPlayer.Character.LeftLowerArm.Material = "Plastic"
+end
+end)
+end})
+
 local ExploitsI = Tabs.Exploits:AddLeftTabbox()
 local Anti = ExploitsI:AddTab("-Anti-")
 game:GetService("RunService").RenderStepped:Connect(function()
@@ -1152,7 +1217,7 @@ Camera:AddSlider("MySlider", {
     Text = "Field Of View",
     Default = 80,
     Min = 80,
-    Max = 120,
+    Max = 100,
     Rounding = 0,
     Compact = true,
     Callback = function(v)
