@@ -753,7 +753,7 @@ end
 if _G.LadderBypass and game.Players.LocalPlayer.Character:GetAttribute("Climbing") then
 task.wait()
 game.Players.LocalPlayer.Character:SetAttribute("Climbing", false)
-Notification:Notify("Complete!")
+Notification:Notify("Complete Bypass!")
 end
 else
 if workspace:FindFirstChild("Ladder_Bypass") then 
@@ -1109,53 +1109,6 @@ else
 AntiDrakobloxxer:Disconnect()
 end
 end})
-Anti:AddDivider()
-Anti:AddToggle("MyToggle",{
-Text = "Anti-Banana",
-Default = false,
-Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Banana" then
-v:Destroy()
-end
-end
-AntiBanana = workspace.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Name == "Banana" then
-v:Destroy()
-end
-end
-end)
-else
-AntiBanana:Disconnect()
-end
-end})
-Anti:AddToggle("MyToggle",{
-Text = "Anti-Jeff",
-Default = false,
-Callback = function(v)
-if v then
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Parent.Name == "JeffTheKiller" then
-v.CanTouch = false
-wait(1)
-v:Destroy()
-end
-end
-AntiJeff = workspace.ChildAdded:Connect(function()
-for _,v in pairs(workspace:GetDescendants()) do
-if v.Parent.Name == "JeffTheKiller" then
-v.CanTouch = false
-wait(1)
-v:Destroy()
-end
-end
-end)
-else
-AntiJeff:Disconnect()
-end
-end})
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
 local Troll = ExploitsII:AddTab("-Troll-")
 Troll:AddToggle("MyToggle",{
@@ -1211,8 +1164,8 @@ local VisualI = Tabs.Visual:AddLeftTabbox()
 local Camera = VisualI:AddTab("-Camera-")
 Camera:AddSlider("MySlider", {
     Text = "Field Of View",
-    Default = 80,
-    Min = 80,
+    Default = 75,
+    Min = 75,
     Max = 100,
     Rounding = 0,
     Compact = true,
@@ -1226,9 +1179,9 @@ Callback = function(v)
 _G.Field = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Field then
-workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 80
+workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 75
 else
-workspace.CurrentCamera.FieldOfView = 80
+workspace.CurrentCamera.FieldOfView = 75
 end
 end)
 end})
@@ -1445,7 +1398,43 @@ Default = Color3.new(1, 1, 0),
 Callback = function(v)
 _G.KeyColorESP = v
 end})
-
+ESP:AddToggle("MyToggle",{
+Text = "Lever ESP",
+Default = false,
+Callback = function(v)
+_G.LeverESP = v
+while wait(1) do
+if _G.LeverESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverForGate" then
+if not v:FindFirstChild("LeverESP") then
+LibraryESP:AddESP(v, "Lever", _G.LeverColorESP or Color3.new(0, 1, 0), 20, "LeverESP")
+end
+elseif v.Name == "TimerLever" then
+if not v:FindFirstChild("LeverESP") then
+LibraryESP:AddESP(v, "TimerLever", _G.LeverColorESP or Color3.new(0, 1, 0), 20, "LeverESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "LeverForGate" then
+if v:FindFirstChild("LeverESP") then
+v:FindFirstChild("LeverESP"):Destroy()
+end
+elseif v.Name == "TimerLever" then
+if v:FindFirstChild("LeverESP") then
+v:FindFirstChild("LeverESP"):Destroy()
+end
+end
+end
+end
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.new(0, 1, 0),
+Callback = function(v)
+_G.LeverColorESP = v
+end})
 
 
 
