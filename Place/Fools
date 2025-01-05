@@ -1,2 +1,2 @@
 _G.RemotesFolder = game.ReplicatedStorage.EntityInfo
-loadstring(game:HttpGet("https://github.com/Cold-Script/Main/blob/main/Loaders/Main"))()
+loadstring(game:HttpGet("https://github.com/Cold-Script/Main/blob/main/Loaders/Main?raw=true"))()
