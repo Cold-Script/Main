@@ -1374,7 +1374,6 @@ Text = "Key ESP",
 Default = false,
 Callback = function(v)
 _G.KeyESP = v
-while wait(1) do
 if _G.KeyESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
@@ -1383,15 +1382,18 @@ LibraryESP:AddESP(v, "Key", _G.KeyColorESP or Color3.new(1, 1, 0), 20, "KeyESP")
 end
 end
 end
-else
+KeyESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "KeyObtain" then
-if v:FindFirstChild("KeyESP") then
-v:FindFirstChild("KeyESP"):Destroy()
+if not v:FindFirstChild("KeyESP") then
+LibraryESP:AddESP(v, "Key", _G.KeyColorESP or Color3.new(1, 1, 0), 20, "KeyESP")
 end
 end
 end
-end
+end)
+else
+KeyESP:Disconnect()
+LibraryESP:Delete("KeyESP")
 end
 end}):AddColorPicker("MyColor",{
 Default = Color3.new(1, 1, 0),
