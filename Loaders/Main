@@ -1,7 +1,6 @@
+local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
 if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" and game:GetService("ReplicatedStorage").EntityInfo.Name == "EntityInfo" then
 local RemotesFolder = game:GetService("ReplicatedStorage").EntityInfo
-else
-local RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
 end
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
