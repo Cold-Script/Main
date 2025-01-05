@@ -1403,7 +1403,6 @@ Text = "Lever ESP",
 Default = false,
 Callback = function(v)
 _G.LeverESP = v
-while wait(1) do
 if _G.LeverESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
@@ -1416,19 +1415,22 @@ LibraryESP:AddESP(v, "TimerLever", _G.LeverColorESP or Color3.new(0, 1, 0), 20, 
 end
 end
 end
-else
+LeverESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LeverForGate" then
-if v:FindFirstChild("LeverESP") then
-v:FindFirstChild("LeverESP"):Destroy()
+if not v:FindFirstChild("LeverESP") then
+LibraryESP:AddESP(v, "Lever", _G.LeverColorESP or Color3.new(0, 1, 0), 20, "LeverESP")
 end
 elseif v.Name == "TimerLever" then
-if v:FindFirstChild("LeverESP") then
-v:FindFirstChild("LeverESP"):Destroy()
+if not v:FindFirstChild("LeverESP") then
+LibraryESP:AddESP(v, "TimerLever", _G.LeverColorESP or Color3.new(0, 1, 0), 20, "LeverESP")
 end
 end
 end
-end
+end)
+else
+LeverESP:Disconnect()
+LibraryESP:Delete("LeverESP")
 end
 end}):AddColorPicker("MyColor",{
 Default = Color3.new(0, 1, 0),
@@ -1440,7 +1442,6 @@ Text = "Book ESP",
 Default = false,
 Callback = function(v)
 _G.BookESP = v
-while wait(1) do
 if _G.BookESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
@@ -1449,15 +1450,18 @@ LibraryESP:AddESP(v, "Book", _G.BookColorESP or Color3.fromRGB(50, 230, 20), 20,
 end
 end
 end
-else
+BookESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-if v:FindFirstChild("BookESP") then
-v:FindFirstChild("BookESP"):Destroy()
+if not v:FindFirstChild("BookESP") then
+LibraryESP:AddESP(v, "Book", _G.BookColorESP or Color3.fromRGB(50, 230, 20), 20, "BookESP")
 end
 end
 end
-end
+end)
+else
+BookESP:Disconnect()
+LibraryESP:Delete("BookESP")
 end
 end}):AddColorPicker("MyColor",{
 Default = Color3.fromRGB(50, 230, 20),
@@ -1469,7 +1473,6 @@ Text = "Breaker ESP",
 Default = false,
 Callback = function(v)
 _G.BreakerESP = v
-while wait(1) do
 if _G.BreakerESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
@@ -1478,14 +1481,18 @@ LibraryESP:AddESP(v, "Breaker", _G.BreakerColorESP or Color3.fromRGB(255, 130, 0
 end
 end
 end
-else
+BreakerESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "LiveBreakerPolePickup" then
-if v:FindFirstChild("BreakerESP") then
-v:FindFirstChild("BreakerESP"):Destroy()
+if not v:FindFirstChild("BreakerESP") then
+LibraryESP:AddESP(v, "Breaker", _G.BreakerColorESP or Color3.fromRGB(255, 130, 0), 20, "BookESP")
 end
 end
 end
+end)
+else
+BreakerESP:Disconnect()
+LibraryESP:Delete("BreakerESP")
 end
 end
 end}):AddColorPicker("MyColor",{
@@ -1498,7 +1505,6 @@ Text = "Fuse ESP",
 Default = false,
 Callback = function(v)
 _G.FuseESP = v
-while wait(1) do
 if _G.FuseESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "FuseObtain" then
@@ -1507,15 +1513,18 @@ LibraryESP:AddESP(v, "Fuse", _G.FuseColorESP or Color3.fromRGB(255, 180, 0), 20,
 end
 end
 end
-else
+FuseESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "FuseObtain" then
-if v:FindFirstChild("FuseESP") then
-v:FindFirstChild("FuseESP"):Destroy()
+if not v:FindFirstChild("FuseESP") then
+LibraryESP:AddESP(v, "Fuse", _G.FuseColorESP or Color3.fromRGB(255, 180, 0), 20, "FuseESP")
 end
 end
 end
-end
+end)
+else
+FuseESP:Disconnect()
+LibraryESP:Delete("FuseESP")
 end
 end}):AddColorPicker("MyColor",{
 Default = Color3.fromRGB(255, 130, 0),
@@ -1527,7 +1536,6 @@ Text = "Generator ESP",
 Default = false,
 Callback = function(v)
 _G.GeneratorESP = v
-while wait(1) do
 if _G.GeneratorESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
@@ -1536,15 +1544,18 @@ LibraryESP:AddESP(v, "Generator", _G.GeneratorColorESP or Color3.fromRGB(0, 255,
 end
 end
 end
-else
+GeneratorESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "MinesGenerator" then
-if v:FindFirstChild("GeneratorESP") then
-v:FindFirstChild("GeneratorESP"):Destroy()
+if not v:FindFirstChild("GeneratorESP") then
+LibraryESP:AddESP(v, "Generator", _G.GeneratorColorESP or Color3.fromRGB(0, 255, 255), 20, "GeneratorESP")
 end
 end
 end
-end
+end)
+else
+GeneratorESP:Disconnect()
+LibraryESP:Delete("GeneratorESP")
 end
 end}):AddColorPicker("MyColor",{
 Default = Color3.fromRGB(0, 255, 255),
