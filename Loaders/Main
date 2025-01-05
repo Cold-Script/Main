@@ -335,7 +335,7 @@ Text = "Notification Entity",
 Default = false,
 Callback = function(v)
 if v then
-local Entity = {"SeekNewCloneMoving","SeekMoving","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
+local Entity = {"SeekNewCloneMoving","SeekMoving","GlitchAmbush","GlitchRush","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
 NotificationEntity = workspace.ChildAdded:Connect(function(v)
 if table.find(Entity,v.Name) then
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
@@ -1326,6 +1326,37 @@ end
 end})
 local VisualII = Tabs.Visual:AddRightTabbox()
 local ESP = VisualII:AddTab("-ESP-")
+ESP:AddToggle("MyToggle",{
+Text = "Door ESP",
+Default = false,
+Callback = function(v)
+_G.DoorESP = v
+while wait(1) do
+if _G.DoorESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Door" and v.Parent.Name == "Door" then
+if not v:FindFirstChild("DoorESP") then
+LibraryESP:AddESP(v, "Door", Color3.new(0, 1, 0), 20, "DoorESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "Door" and v.Parent.Name == "Door" then
+if v:FindFirstChild("DoorESP") then
+v:Destroy()
+end
+end
+end
+end
+end
+end})
+
+
+
+
+
+
 
 local MenuGroup = Tabs.Config:AddLeftGroupbox("Menu")
 local CreditsGroup = Tabs.Config:AddRightGroupbox("Credits")
