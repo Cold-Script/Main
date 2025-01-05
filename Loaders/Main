@@ -1493,8 +1493,64 @@ Default = Color3.fromRGB(255, 130, 0),
 Callback = function(v)
 _G.BreakerColorESP = v
 end})
-
-
+ESP:AddToggle("MyToggle",{
+Text = "Fuse ESP",
+Default = false,
+Callback = function(v)
+_G.FuseESP = v
+while wait(1) do
+if _G.FuseESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "FuseObtain" then
+if not v:FindFirstChild("FuseESP") then
+LibraryESP:AddESP(v, "Fuse", _G.FuseColorESP or Color3.fromRGB(255, 180, 0), 20, "FuseESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "FuseObtain" then
+if not v:FindFirstChild("FuseESP") then
+v:FindFirstChild("FuseESP"):Destroy()
+end
+end
+end
+end
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.fromRGB(255, 130, 0),
+Callback = function(v)
+_G.FuseColorESP = v
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Generator ESP",
+Default = false,
+Callback = function(v)
+_G.GeneratorESP = v
+while wait(1) do
+if _G.GeneratorESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+if not v:FindFirstChild("GeneratorESP") then
+LibraryESP:AddESP(v, "Generator", _G.GeneratorColorESP or Color3.fromRGB(0, 255, 255), 20, "GeneratorESP")
+end
+end
+end
+else
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+if not v:FindFirstChild("GeneratorESP") then
+v:FindFirstChild("GeneratorESP"):Destroy()
+end
+end
+end
+end
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.fromRGB(0, 255, 255),
+Callback = function(v)
+_G.GeneratorColorESP = v
+end})
 
 
 local MenuGroup = Tabs.Config:AddLeftGroupbox("Menu")
