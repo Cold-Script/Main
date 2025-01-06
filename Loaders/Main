@@ -147,7 +147,7 @@ Default = false,
 Callback = function(v)
 _G.AutoBreaker = v
 game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AutoBreaker then
+if _G.AutoBreaker and workspace.CurrentRooms["100"] then
 game:GetService("ReplicatedStorage").RemotesFolder.EBF:FireServer()
 end
 end)
