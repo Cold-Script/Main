@@ -1345,7 +1345,6 @@ Text = "Door ESP",
 Default = false,
 Callback = function(v)
 _G.DoorESP = v
-while wait(1) do
 if _G.DoorESP then
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
@@ -1354,15 +1353,18 @@ LibraryESP:AddESP(v, "Door", _G.DoorColorESP or Color3.new(0, 1, 0), 20, "DoorES
 end
 end
 end
-else
+DoorESP = workspace.CurrentRooms.ChildAdded:Connect(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
-if v:FindFirstChild("DoorESP") then
-v:FindFirstChild("DoorESP"):Destroy()
+if not v:FindFirstChild("DoorESP") then
+LibraryESP:AddESP(v, "Door", _G.DoorColorESP or Color3.new(0, 1, 0), 20, "DoorESP")
 end
 end
 end
-end
+end)
+else
+DoorESP:Disconnect()
+LibraryESP:Delete("DoorESP")
 end
 end}):AddColorPicker("MyColor",{
 Default = Color3.new(0, 1, 0),
@@ -1563,7 +1565,37 @@ Default = Color3.fromRGB(0, 255, 255),
 Callback = function(v)
 _G.GeneratorColorESP = v
 end})
-
+ESP:AddToggle("MyToggle",{
+Text = "Anchor ESP",
+Default = false,
+Callback = function(v)
+_G.AnchorESP = v
+if _G.AnchorESP then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+if not v:FindFirstChild("AnchorESP") then
+LibraryESP:AddESP(v, "Anchor", _G.AnchorColorESP or Color3.fromRGB(160, 170, 190), 20, "AnchorESP")
+end
+end
+end
+AnchorESP = workspace.CurrentRooms.ChildAdded:Connect(function()
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+if not v:FindFirstChild("AnchorESP") then
+LibraryESP:AddESP(v, "Anchor", _G.AnchorColorESP or Color3.fromRGB(160, 170, 190), 20, "AnchorESP")
+end
+end
+end
+end)
+else
+AnchorESP:Disconnect()
+LibraryESP:Delete("AnchorESP")
+end
+end}):AddColorPicker("MyColor",{
+Default = Color3.fromRGB(160, 170, 190),
+Callback = function(v)
+_G.AnchorColorESP = v
+end})
 
 local MenuGroup = Tabs.Config:AddLeftGroupbox("Menu")
 local CreditsGroup = Tabs.Config:AddRightGroupbox("Credits")
