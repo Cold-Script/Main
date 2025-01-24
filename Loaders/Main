@@ -1,4 +1,8 @@
-local RemotesFolder = _G.RemotesFolder
+if game:GetService("ReplicatedStorage").GameData.Floor.Value == "Fools" then
+RemotesFolder = game:GetService("ReplicatedStorage").EntityInfo
+else
+RemotesFolder = game:GetService("ReplicatedStorage").RemotesFolder
+end
 local Repository = "https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/patch-3/"
 local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
@@ -146,11 +150,11 @@ Text = "Auto Breaker",
 Default = false,
 Callback = function(v)
 _G.AutoBreaker = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.AutoBreaker and workspace.CurrentRooms["100"] then
-game:GetService("ReplicatedStorage").RemotesFolder.EBF:FireServer()
+while _G.AutoBreaker do wait(1)
+if _G.AutoBreaker then
+RemotesFolder.EBF:FireServer()
 end
-end)
+end
 end})
 Automation:AddDivider()
 Automation:AddButton({
@@ -794,6 +798,7 @@ Body:AddLabel("Body Color"):AddColorPicker("Body Color",{
 Default = Color3.new(1, 1, 1),
 Callback = function(v)
 _G.BodyColor = v
+task.spawn(function()
 while _G.BodyColor do wait(1)
 game.Players.LocalPlayer.Character.Head.Color = _G.BodyColor or Color3.new(1,1,1)
 game.Players.LocalPlayer.Character.UpperTorso.Color = _G.BodyColor or Color3.new(1,1,1)
@@ -811,12 +816,15 @@ game.Players.LocalPlayer.Character.LeftFoot.Color = _G.BodyColor or Color3.new(1
 game.Players.LocalPlayer.Character.LeftHand.Color = _G.BodyColor or Color3.new(1,1,1)
 game.Players.LocalPlayer.Character.LeftLowerArm.Color = _G.BodyColor or Color3.new(1,1,1)
 end
+end)
 end})
 Body:AddToggle("MyToggle",{
 Text = "Blur Body",
 Default = false,
 Callback = function(v)
 _G.BlurBody = v
+task.spawn(function()
+while wait(0.01) do
 if _G.BlurBody then
 game.Players.LocalPlayer.Character.Head.Material = "ForceField"
 game.Players.LocalPlayer.Character.UpperTorso.Material = "ForceField"
@@ -850,6 +858,8 @@ game.Players.LocalPlayer.Character.LeftFoot.Material = "Plastic"
 game.Players.LocalPlayer.Character.LeftHand.Material = "Plastic"
 game.Players.LocalPlayer.Character.LeftLowerArm.Material = "Plastic"
 end
+end
+end)
 end})
 local ExploitsI = Tabs.Exploits:AddLeftTabbox()
 local Anti = ExploitsI:AddTab("-Anti-")
