@@ -1037,9 +1037,9 @@ Callback = function(v)
 _G.AntiDread = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AntiDread then
-RemotesFolder.Dread:FireServer(false)
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Dread.Name = "_Dread"
 else
-RemotesFolder.Dread:FireServer(true)
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules._Dread.Name = "Dread"
 end
 end)
 end})
@@ -1193,11 +1193,18 @@ workspace.CurrentCamera.FieldOfView = 75
 end
 end)
 end})
-Camera:AddButton({
+Camera:AddToggle("MyToggle",{
 Text = "No Camera Shake",
-DoubleClick = true,
-Func = function()
-RemotesFolder.CamShake:Destroy()
+Default = false,
+Callback = function(v)
+_G.CamShake = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.CamShake then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.CamShake.Name = "_CamShake"
+else
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules._CamShake.Name = "CamShake"
+end
+end)
 end})
 Camera:AddDivider()
 Camera:AddToggle("MyToggle",{
@@ -1271,6 +1278,31 @@ end
 end)
 end})
 FPS:AddDivider()
+FPS:AddToggle("MyToggle",{
+Text = "No Cutscenes",
+Default = false,
+Callback = function(v)
+_G.NoCutscenes = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.NoCutscenes then
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.Elevator1.Name = "_Elevator1"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.Figure.Name = "_Figure"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.FigureHotelChase.Name = "_FigureHotelChase"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.FigureHotelEnd.Name = "_FigureHotelEnd"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.FigureHotelFire.Name = "_FigureHotelFire"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.SeekIntroFools.Name = "_SeekIntroFools"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes.SeekIntroHotel.Name = "_SeekIntroHotel"
+else
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._Elevator1.Name = "Elevator1"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._Figure.Name = "Figure"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._FigureHotelChase.Name = "FigureHotelChase"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._FigureHotelEnd.Name = "FigureHotelEnd"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._FigureHotelFire.Name = "FigureHotelFire"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._SeekIntroFools.Name = "SeekIntroFools"
+game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes._SeekIntroHotel.Name = "SeekIntroHotel"
+end
+end)
+end})
 FPS:AddToggle("MyToggle",{
 Text = "Low Detail",
 Default = false,
@@ -1346,6 +1378,7 @@ else
 NoBat:Disconnect()
 end
 end})
+
 local VisualII = Tabs.Visual:AddRightTabbox()
 local ESP = VisualII:AddTab("-ESP-")
 ESP:AddToggle("MyToggle",{
