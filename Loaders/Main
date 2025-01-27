@@ -1123,6 +1123,7 @@ end
 end)
 end})
 end
+if Retro then
 Anti:AddDivider()
 Anti:AddToggle("MyToggle",{
 Text = "Anti-Lava",
@@ -1197,6 +1198,140 @@ else
 AntiDrakobloxxer:Disconnect()
 end
 end})
+end
+if Fools then
+Anti:AddDivider()
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Banana",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BananaPeel" then
+v.CanTouch = false
+v:Destroy()
+end
+end
+AntiBanana = workspace.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == "BananaPeel" then
+v.CanTouch = false
+v:Destroy()
+end
+end
+end)
+else
+AntiBanana:Disconnect()
+end
+end})
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Jeff",
+Default = false,
+Callback = function(v)
+if v then
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Knife.CanTouch = false 
+v.Knife.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Head.CanTouch = false 
+v.Head.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.HumanoidRootPart.CanTouch = false 
+v.HumanoidRootPart.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Arm"].CanTouch = false 
+v["Left Arm"].CanCollide = false
+end 
+end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Leg"].CanTouch = false 
+v["Left Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Arm"].CanTouch = false 
+v["Right Arm"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Leg"].CanTouch = false 
+v["Right Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do
+if v.Name == "JeffTheKiller" then 
+v.Torso.CanTouch = false 
+v.Torso.CanCollide = false
+end 
+end 
+AntiJeff = workspace.ChildAdded:Connect(function(child)
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Knife.CanTouch = false 
+v.Knife.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.Head.CanTouch = false 
+v.Head.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v.HumanoidRootPart.CanTouch = false 
+v.HumanoidRootPart.CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Arm"].CanTouch = false 
+v["Left Arm"].CanCollide = false
+end 
+end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Left Leg"].CanTouch = false 
+v["Left Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Arm"].CanTouch = false 
+v["Right Arm"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if v.Name == "JeffTheKiller" then 
+v["Right Leg"].CanTouch = false 
+v["Right Leg"].CanCollide = false
+end 
+end 
+for _,v in pairs(game.workspace:GetChildren()) do
+if v.Name == "JeffTheKiller" then 
+v.Torso.CanTouch = false 
+v.Torso.CanCollide = false
+end 
+end 
+end)
+else
+AntiJeff:Disconnect()
+end
+end})
+end
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
 local Troll = ExploitsII:AddTab("-Troll-")
 Troll:AddToggle("MyToggle",{
