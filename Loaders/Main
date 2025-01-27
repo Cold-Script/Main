@@ -8,8 +8,81 @@ local Library = loadstring(game:HttpGet(Repository .. "Library.lua"))()
 local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/LinoriaLib/refs/heads/Library/addons/ThemeManager.lua"))()
 local SaveManager = loadstring(game:HttpGet(Repository .. "addons/SaveManager.lua"))()
 local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/Warning/refs/heads/main/Warning.lua"))()
-local LibraryESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Cold-Script/ESPBETA/refs/heads/main/Esp"))()
-wait()
+
+local ESP_Chest = {ChestBox={"Chest",3},ChestBoxLocked={"Chest [Locked]",3},Toolbox_Locked={"Box [Locked]",3},Toolbox={"Box",3},Chest_Vine={"Chest",7}}
+local ESP_Items = {GlitchCube={"GlitchCube",5},StarJug={"StarJug",1.5},StarBottle={"StarBottle",1.5},StarVial={"StarVial",1.5},GweenSoda={"Gween Soda",1.5},Bread={"Bread",1.5},Cheese={"Cheese",1.5},BandagePack={"BandagePack",1.5},BatteryPack={"Battery Pack",1.5},LaserPointer={"LaserPointer",1.5},Glowsticks={"Glowstick",1.5},Smoothie={"Smoothie",1.5},Straplight={"Straplight",1.5},Bulklight={"Bulklight",1.5},KeyObtain={"Key",1.5},LiveHintBook={"Book",1.5},Lighter={"Lighter",1.5},Lockpick={"Lockpicks",1.5},Vitamins={"Vitamins",1.5},Crucifix={"Crucifix",1.5},CrucifixWall={"Crucifix",1.5},SkeletonKey={"Skeleton Key",1.5},Flashlight={"Flashlight",1.5},Candle={"Candle",1.5},FuseObtain={"Fuse",1.5},LiveBreakerPolePickup={"Fuse",1.5},Shears={"Shears",1.5},Battery={"Battery",1.5},PickupItem={"Paper",1.5},ElectricalKeyObtain={"Electrical Key",1.5},Shakelight={"Shakelight",1.5},Scanner={"iPad",1.5}}
+local ESP_Entities = {SeekMovingNewClone={"Seek",7},GlitchAmbush={"Glitch-Ambush",5},GlitchRush={"Glitch-Rush",5},GlitchScreech={"Glitch-Screech",3},Grumbo={"Grumble",7},GiggleCeiling={"Giggle",7},SallyMoving={"Sally",7},BackdoorLookman={"Lookman",7},BackdoorRush={"Blitz",7},Wall={"Seek-Wall",3},RetroScreech={"Screech",3},JeffTheKiller={"JeffTheKiller",7},RushMoving={"Rush",5},AmbushMoving={"Ambush",5},FigureRig={"Figure",7},FigureRagdoll={"Figure",7},FigureLibrary={"Figure",7},SeekMoving={"Seek",5.5},Screech={"Screech",2},Eyes={"Eyes",4},Snare={"Snare",2},A60={"A-60",10},A120={"A-120",10}}
+local ESP_Other = {Rooms_Locker={"Locker",3},Rooms_Frigde_Locker={"Locker",3},TimerLever={"Timer Lever",7},WaterPump={"WaterPump",7},MinesAnchor={"Anchor",7},MinesGateButton={"Gate Button",7},MinesGenerator={"Generator",7},Door={"Door",5},LeverForGate={"Lever",3},GoldPile={"Gold",0.5},Bandage={"Bandage",0.5}}
+for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
+if Player ~= game:GetService("Players").LocalPlayer then
+ESP_Other[Player.Name] = {Player.DisplayName,4}
+end
+end
+local function ApplySettings(Object)
+task.spawn(function()
+if (ESP_Chest[Object.Name] or ESP_Items[Object.Name] or ESP_Entities[Object.Name] or ESP_Other[Object.Name]) and Object.ClassName == "Model" then
+if Object:FindFirstChild("RushNew") then
+if not Object.RushNew:WaitForChild("PlaySound").Playing then return end
+end
+local Color = ESP_Chest[Object.Name] and _G.ColorChestESP or ESP_Items[Object.Name] and _G.ColorItemsESP or ESP_Entities[Object.Name] and _G.ColorEntityESP or ESP_Other[Object.Name] and _G.ColorOtherESP
+if Object.Name == "RushMoving" or Object.Name == "AmbushMoving" or Object.Name == "Eyes" or Object.Name == "A60" or Object.Name == "A120" or Object.Name == "GlitchAmbush" or Object.Name == "GlitchRush" or Object.Name == "BackdoorRush" or Object.Name == "BackdoorLookman" then
+for i = 1, 100 do
+if Object:FindFirstChildOfClass("Part") then
+break
+end
+if i == 100 then
+return
+end
+end
+Object:FindFirstChildOfClass("Part").Transparency = 0.99
+Instance.new("Humanoid",Object)
+end
+local function ApplyHighlight(IsValid,Bool)
+                if IsValid then
+                    if Bool then
+                        TXT = IsValid[1]
+                        local UI = Instance.new("BillboardGui",Object)
+                        UI.Size = UDim2.new(0,1000,0,30)
+                        UI.AlwaysOnTop = true
+                        UI.StudsOffset = Vector3.new(0,IsValid[2],0)
+                        local Label = Instance.new("TextLabel",UI)
+                        Label.Size = UDim2.new(1,0,1,0)
+                        Label.BackgroundTransparency = 1
+                        Label.TextScaled = true
+                        Label.Text = TXT
+                        Label.TextColor3 = Color
+                        Label.FontFace = Font.new("rbxasset://fonts/families/Oswald.json")
+                        Label.TextStrokeTransparency = 0
+                        Label.TextStrokeColor3 = Color3.new(Color.R/2,Color.G/2,Color.B/2)
+                    elseif Object:FindFirstChild("BillboardGui") then
+                        Object.BillboardGui:Destroy()
+                    end
+                    local Target = Object
+                    if not Mines then
+                    if IsValid[1] == "Door" and Object.Parent.Name ~= "49" and Object.Parent.Name ~= "50" then
+                        Target = Object:WaitForChild("Door")
+                    end
+                    end
+                    if Bool and not Object:FindFirstChild("Highlight") then
+                        local Highlight = Instance.new("Highlight",Target)
+                        Highlight.FillColor = Color
+                        Highlight.OutlineColor = Color
+                        Highlight.FillTransparency = 1
+                    elseif Target:FindFirstChild("Highlight") then
+                        Target.Highlight:Destroy()
+                    end
+                end
+            end
+            
+            ApplyHighlight(ESP_Chest[Object.Name],_G.ChestESP)
+            ApplyHighlight(ESP_Items[Object.Name],_G.ItemESP)
+            ApplyHighlight(ESP_Entities[Object.Name],_G.EntityESP)
+            ApplyHighlight(ESP_Other[Object.Name],_G.OtherESP)
+        end
+    end)
+end
+workspace.DescendantAdded:Connect(ApplySettings)
+workspace.CurrentRooms.DescendantAdded:Connect(ApplySettings)
 local Window = Library:CreateWindow({
     Title = "YOUHUB | v5 | " .. game.Players.LocalPlayer.Name,
     Center = true,
@@ -20,6 +93,15 @@ local Window = Library:CreateWindow({
     TabPadding = 2,
     MenuFadeTime = 0
 })
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameData = ReplicatedStorage:WaitForChild("GameData")
+local Floor = GameData:WaitForChild("Floor")
+local Fools = Floor.Value == "Fools"
+local Hotel = Floor.Value == "Hotel"
+local Rooms = Floor.Value == "Rooms"
+local Mines = Floor.Value == "Mines"
+local Retro = Floor.Value == "Retro"
+local Backdoor = Floor.Value == "Backdoor"
 local Tabs = {
   Main = Window:AddTab("Main"),
   Players = Window:AddTab("Players"),
@@ -1026,7 +1108,7 @@ while _G.AntiHalt do wait(0.1)
 game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade.Parent = game.Workspace
 end
 end})
-if not game.ReplicatedStorage.GameData.Floor.Value == "Fools" then
+if not Fools then
 Anti:AddToggle("MyToggle",{
 Text = "Anti-Dread",
 Default = false,
@@ -1172,7 +1254,7 @@ Camera:AddSlider("MySlider", {
     Text = "Field Of View",
     Default = 75,
     Min = 75,
-    Max = 100,
+    Max = 120,
     Rounding = 0,
     Compact = true,
     Callback = function(v)
@@ -1272,8 +1354,7 @@ FPS:AddDivider()
 FPS:AddButton({
 Text = "No Cutscenes",
 DoubleClick = true,
-Func = function(v)
-game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Cutscenes:Destroy()
+Func = function()
 RemotesFolder.Cutscenes:Destroy()
 end})
 FPS:AddToggle("MyToggle",{
@@ -1351,9 +1432,68 @@ else
 NoBat:Disconnect()
 end
 end})
-
-
-
+local VisualII = Tabs.Visual:AddLeftTabbox()
+local ESP = VisualII:AddTab("-ESP-")
+ESP:AddToggle("MyToggle",{
+Text = "Object ESP",
+Default = false,
+Callback = function(v)
+_G.OtherESP = v
+    for _,Object in pairs(workspace:GetDescendants()) do
+        if ESP_Other[Object.Name] then
+            ApplySettings(Object)
+        end
+    end
+end}):AddColorPicker("OtherESP",{
+Default = Color3.new(0, 1, 1),
+Callback = function(v)
+_G.ColorOtherESP = v
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Entities ESP",
+Default = false,
+Callback = function(v)
+_G.EntityESP = v
+    for _,Object in pairs(workspace:GetDescendants()) do
+        if ESP_Entities[Object.Name] then
+            ApplySettings(Object)
+        end
+    end
+end}):AddColorPicker("EntityESP",{
+Default = Color3.new(1, 0, 0),
+Callback = function(v)
+_G.ColorEntityESP = v
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Chest ESP",
+Default = false,
+Callback = function(v)
+_G.ChestESP = v
+    for _,Object in pairs(workspace:GetDescendants()) do
+        if ESP_Chest[Object.Name] then
+            ApplySettings(Object)
+        end
+    end
+end}):AddColorPicker("ChestESP",{
+Default = Color3.new(1, 0, 1),
+Callback = function(v)
+_G.ColorChestESP = v
+end})
+ESP:AddToggle("MyToggle",{
+Text = "Items ESP",
+Default = false,
+Callback = function(v)
+_G.ItemESP = v
+    for _,Object in pairs(workspace:GetDescendants()) do
+        if ESP_Items[Object.Name] then
+            ApplySettings(Object)
+        end
+    end
+end}):AddColorPicker("ItemESP",{
+Default = Color3.new(1, 1, 0),
+Callback = function(v)
+_G.ColorItemsESP = v
+end})
 local MenuGroup = Tabs.Config:AddLeftGroupbox("Menu")
 local CreditsGroup = Tabs.Config:AddRightGroupbox("Credits")
 
