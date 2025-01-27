@@ -63,7 +63,7 @@ local function ApplyHighlight(IsValid,Bool)
                         Target = Object:WaitForChild("Door")
                     end
                     end
-                    if Bool and not Object:FindFirstChild("Highlight") then
+                    if Bool then
                         local Highlight = Instance.new("Highlight",Target)
                         Highlight.FillColor = Color
                         Highlight.OutlineColor = Color
