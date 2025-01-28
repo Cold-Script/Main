@@ -39,7 +39,7 @@ Instance.new("Humanoid",Object)
 end
 local function ApplyHighlight(IsValid,Bool)
                 if IsValid then
-                    if Bool then
+                    if Bool and not Object:FindFirstChild("BillboardGui") then
                         TXT = IsValid[1]
                         local UI = Instance.new("BillboardGui",Object)
                         UI.Size = UDim2.new(0,1000,0,30)
@@ -63,7 +63,7 @@ local function ApplyHighlight(IsValid,Bool)
                         Target = Object:WaitForChild("Door")
                     end
                     end
-                    if Bool then
+                    if Bool and not Object:FindFirstChild("Highlight") then
                         local Highlight = Instance.new("Highlight",Target)
                         Highlight.FillColor = Color
                         Highlight.OutlineColor = Color
@@ -416,7 +416,7 @@ Text = "Notification Entity",
 Default = false,
 Callback = function(v)
 if v then
-local Entity = {"SeekNewCloneMoving","SeekMoving","GlitchAmbush","GlitchRush","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
+local Entity = {"SeekMovingNewClone","SeekMoving","GlitchAmbush","GlitchRush","BackdoorLookman","BackdoorRush","GloombatSwarm","Eyes","JeffTheKiller","RushMoving","AmbushMoving","Snare","A60","A120"}
 NotificationEntity = workspace.ChildAdded:Connect(function(v)
 if table.find(Entity,v.Name) then
 repeat task.wait() until game.Players.LocalPlayer:DistanceFromCharacter(v:GetPivot().Position) < 750 or not v:IsDescendantOf(workspace)
@@ -654,6 +654,23 @@ end
 end
 end)
 end})
+Character:AddToggle("Godmode",{
+Text = "Godmode",
+Default = false,
+Callback = function(v)
+if v then
+local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
+Collison.Position = Collison.Position - Vector3.new(0,10,0)
+else
+local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
+Collison.Position = Collison.Position - Vector3.new(0,-10,0)
+end
+game:GetService("RunService").RenderStepped:Connect(function()
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
+Toggles.Godmode:SetValue(false)
+end
+end)
+end})
 Character:AddToggle("MyToggle",{
 Text = "No Accessories",
 Default = false,
@@ -762,6 +779,7 @@ end}):AddKeyPicker("Fly", {
    Mode = Library.IsMobile and "Toggle" or "Hold",
    SyncToggleState = Library.IsMobile
 })
+if not Fools then
 LocalPlayer:AddToggle("MyToggle",{
 Text = "Can Jump",
 Default = false,
@@ -782,6 +800,7 @@ game.Players.LocalPlayer.Character.Humanoid.Jump = true
 end
 end)
 end})
+end
 LocalPlayer:AddButton({
 Text = "Reset Character",
 DoubleClick = true,
@@ -1042,7 +1061,7 @@ end
 end
 end
 if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
-if not Fools then
+if Fools then
 for _, v in workspace:GetChildren() do
 if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
 RemotesFolder.MotorReplication:FireServer(0,120,0,false)
@@ -1104,13 +1123,15 @@ elseif v.Name == "RetroScreech" then
 v:Destroy()
 end
 end
-AntiScreech = workspace.Camera.ChildAdded:Connect(function(v)
+AntiScreech = workspace.CurrentCamera.ChildAdded:Connect(function(v)
+for _,v in pairs(workspace.Camera:GetDescendants()) do
 if v.Name == "Screech" then
 v:Destroy()
 elseif v.Name == "GlitchScreech" then
 v:Destroy()
 elseif v.Name == "RetroScreech" then
 v:Destroy()
+end
 end
 end)
 RemotesFolder.Screech.Name = "_Screech"
@@ -1364,6 +1385,20 @@ end)
 else
 AntiJeff:Disconnect()
 end
+end})
+Anti:AddToggle("MyToggle",{
+Text = "Anti-Seek Car",
+Default = false,
+Callback = function(v)
+_G.AntiSeekCar = v
+game:GetService("RunService").RenderStepped:Connect(function()
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if v.Name == "TriggerEventCollision" then 
+v:FindFirstChild("Collision").CanTouch = not _G.AntiSeekCar
+v:FindFirstChild("Collision").CanCollide = not _G.AntiSeekCar
+end 
+end 
+end)
 end})
 end
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
@@ -1623,11 +1658,13 @@ Text = "Entities ESP",
 Default = false,
 Callback = function(v)
 _G.EntityESP = v
+while _G.EntityESP do wait(0.5)
     for _,Object in pairs(workspace:GetDescendants()) do
         if ESP_Entities[Object.Name] then
             ApplySettings(Object)
         end
     end
+end
 end}):AddColorPicker("EntityESP",{
 Default = Color3.new(1, 0, 0),
 Callback = function(v)
