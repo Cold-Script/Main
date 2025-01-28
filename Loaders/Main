@@ -18,17 +18,13 @@ if Player ~= game:GetService("Players").LocalPlayer then
 ESP_Other[Player.Name] = {Player.DisplayName,4}
 end
 end
-_G.ColorChestESP = Color3.new(1,0,1)
-_G.ColorItemsESP = Color3.new(1,1,0)
-_G.ColorEntityESP = Color3.new(1,0,0)
-_G.ColorOtherESP = Color3.new(0,1,1)
 local function ApplySettings(Object)
 task.spawn(function()
 if (ESP_Chest[Object.Name] or ESP_Items[Object.Name] or ESP_Entities[Object.Name] or ESP_Other[Object.Name]) and Object.ClassName == "Model" then
 if Object:FindFirstChild("RushNew") then
 if not Object.RushNew:WaitForChild("PlaySound").Playing then return end
 end
-local Color = ESP_Chest[Object.Name] and _G.ColorChestESP or ESP_Items[Object.Name] and _G.ColorItemsESP or ESP_Entities[Object.Name] and _G.ColorEntityESP or ESP_Other[Object.Name] and _G.ColorOtherESP
+local Color = ESP_Chest[Object.Name] and Color3.new(1,0,1) or ESP_Items[Object.Name] and Color3.new(1,1) or ESP_Entities[Object.Name] and Color3.new(1) or ESP_Other[Object.Name] and Color3.new(0,1,1)
 
 if Object.Name == "RushMoving" or Object.Name == "AmbushMoving" or Object.Name == "Eyes" or Object.Name == "A60" or Object.Name == "A120" or Object.Name == "GlitchAmbush" or Object.Name == "GlitchRush" or Object.Name == "BackdoorRush" or Object.Name == "BackdoorLookman" then
 for i = 1, 100 do
@@ -82,6 +78,17 @@ local function ApplyHighlight(IsValid,Bool)
             ApplyHighlight(ESP_Items[Object.Name],_G.ItemESP)
             ApplyHighlight(ESP_Entities[Object.Name],_G.EntityESP)
             ApplyHighlight(ESP_Other[Object.Name],_G.OtherESP)
+        end
+if Object:IsA("ProximityPrompt") then
+            if _G.InstantInteract then
+                Object.HoldDuration = 0
+            end
+            if _G.IncreasedDistance then
+                Object.MaxActivationDistance = _G.IncreasedDistance and _G.MaxReach or 7.5
+            end
+            if _G.InteractNoclip then
+                Object.RequiresLineOfSight = not _G.InteractNoclip
+            end
         end
     end)
 end
@@ -170,55 +177,13 @@ Misc:AddToggle("MyToggle",{
 Text = "Through Interact",
 Default = false,
 Callback = function(v)
-_G.ThroughInteract = v
-if _G.ThroughInteract then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.RequiresLineOfSight = false
-end
-end
-ThroughInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.RequiresLineOfSight = false
-end
-end
-end)
-else
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.RequiresLineOfSight = true
-end
-end
-ThroughInteract:Disconnect()
-end
+_G.InteractNoclip = v
 end})
 Misc:AddToggle("MyToggle",{
 Text = "Reach",
 Default = false,
 Callback = function(v)
-_G.RemoteInteract = v
-if _G.RemoteInteract then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.MaxActivationDistance = _G.MaxReach or 7.5
-end
-end
-RemoteInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.MaxActivationDistance = _G.MaxReach or 7.5
-end
-end
-end)
-else
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.MaxActivationDistance = 7.5
-end
-end
-RemoteInteract:Disconnect()
-end
+_G.IncreasedDistance = v
 end})
 Misc:AddSlider("MySlider",{
 Text = "Max Reach",
@@ -628,23 +593,7 @@ Character:AddToggle("MyToggle",{
 Text = "Instance Interact",
 Default = false,
 Callback = function(v)
-_G.InstanceInteract = v
-if _G.InstanceInteract then
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.HoldDuration = 0
-end
-end
-InstanceInteract = workspace.CurrentRooms.ChildAdded:Connect(function(v)
-for _,v in pairs(workspace:GetDescendants()) do
-if v:IsA("ProximityPrompt") then
-v.HoldDuration = 0
-end
-end
-end)
-else
-InstanceInteract:Disconnect()
-end
+_G.InstantInteract = v
 end})
 Character:AddToggle("MyToggle",{
 Text = "Eat Candies",
@@ -1440,55 +1389,7 @@ else
 SpoofMotor:Disconnect()
 end
 end})
-if Fools then
-local ExploitsIII = Tabs.Exploits:AddRightTabbox()
-local Removal = ExploitsIII:AddTab("Removal")
-Removal:AddToggle("MyToggle",{
-Text = "Removal Gate Door",
-Default = false,
-Callback = function(v)
-_G.RemoveGate = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.RemoveGate then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
-if v.Name == "Gate" then 
-v:Destroy()
-end 
-end 
-end
-end)
-end})
-Removal:AddToggle("MyToggle",{
-Text = "Removal Skeleton Doors",
-Default = false,
-Callback = function(v)
-_G.RemoveSkeleton = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.RemoveSkeleton then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
-if v.Name == "Wax_Door" then 
-v:Destroy()
-end 
-end 
-end
-end)
-end})
-Removal:AddToggle("MyToggle",{
-Text = "Removal Puzzle Doors",
-Default = false,
-Callback = function(v)
-_G.RemovePuzzle = v
-game:GetService("RunService").RenderStepped:Connect(function()
-if _G.RemovePuzzle then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
-if v.Name == "MovingDoor" then 
-v:Destroy()
-end 
-end 
-end
-end)
-end})
-end
+
 local VisualI = Tabs.Visual:AddLeftTabbox()
 local Camera = VisualI:AddTab("-Camera-")
 Camera:AddSlider("MySlider", {
@@ -1508,9 +1409,9 @@ Callback = function(v)
 _G.Field = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.Field then
-workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 75
+workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 70
 else
-workspace.CurrentCamera.FieldOfView = 75
+workspace.CurrentCamera.FieldOfView = 70
 end
 end)
 end})
