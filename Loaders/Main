@@ -11,7 +11,7 @@ local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 
 local ESP_Chest = {ChestBox={"Chest",3},ChestBoxLocked={"Chest [Locked]",3},Toolbox_Locked={"Box [Locked]",3},Toolbox={"Box",3},Chest_Vine={"Chest",7}}
 local ESP_Items = {GlitchCube={"GlitchCube",5},StarJug={"StarJug",1.5},StarBottle={"StarBottle",1.5},StarVial={"StarVial",1.5},GweenSoda={"Gween Soda",1.5},Bread={"Bread",1.5},Cheese={"Cheese",1.5},BandagePack={"BandagePack",1.5},BatteryPack={"Battery Pack",1.5},LaserPointer={"LaserPointer",1.5},Glowsticks={"Glowstick",1.5},Smoothie={"Smoothie",1.5},Straplight={"Straplight",1.5},Bulklight={"Bulklight",1.5},KeyObtain={"Key",1.5},LiveHintBook={"Book",1.5},Lighter={"Lighter",1.5},Lockpick={"Lockpicks",1.5},Vitamins={"Vitamins",1.5},Crucifix={"Crucifix",1.5},CrucifixWall={"Crucifix",1.5},SkeletonKey={"Skeleton Key",1.5},Flashlight={"Flashlight",1.5},Candle={"Candle",1.5},FuseObtain={"Fuse",1.5},LiveBreakerPolePickup={"Fuse",1.5},Shears={"Shears",1.5},Battery={"Battery",1.5},PickupItem={"Paper",1.5},ElectricalKeyObtain={"Electrical Key",1.5},Shakelight={"Shakelight",1.5},Scanner={"iPad",1.5}}
-local ESP_Entities = {SeekMovingNewClone={"Seek",7},GlitchAmbush={"Glitch-Ambush",5},GlitchRush={"Glitch-Rush",5},GlitchScreech={"Glitch-Screech",3},Grumbo={"Grumble",7},GiggleCeiling={"Giggle",7},SallyMoving={"Sally",7},BackdoorLookman={"Lookman",7},BackdoorRush={"Blitz",7},Wall={"Seek-Wall",3},RetroScreech={"Screech",3},JeffTheKiller={"JeffTheKiller",7},RushMoving={"Rush",5},AmbushMoving={"Ambush",5},FigureRig={"Figure",7},FigureRagdoll={"Figure",7},FigureLibrary={"Figure",7},SeekMoving={"Seek",5.5},Screech={"Screech",2},Eyes={"Eyes",4},Snare={"Snare",2},A60={"A-60",10},A120={"A-120",10}}
+local ESP_Entities = {SeekMovingNewClone={"Seek",7},GlitchAmbush={"Glitch-Ambush",5},GlitchRush={"Glitch-Rush",5},GlitchScreech={"Glitch-Screech",3},Grumbo={"Grumble",7},GiggleCeiling={"Giggle",7},SallyMoving={"Sally",7},BackdoorLookman={"Lookman",7},BackdoorRush={"Blitz",7},Wall={"Seek-Wall",3},JeffTheKiller={"JeffTheKiller",7},RushMoving={"Rush",5},AmbushMoving={"Ambush",5},FigureRig={"Figure",7},FigureRagdoll={"Figure",7},FigureLibrary={"Figure",7},SeekMoving={"Seek",5.5},Eyes={"Eyes",4},Snare={"Snare",2},A60={"A-60",10},A120={"A-120",10}}
 local ESP_Other = {Rooms_Locker={"Locker",3},Rooms_Frigde_Locker={"Locker",3},TimerLever={"Timer Lever",7},WaterPump={"WaterPump",7},MinesAnchor={"Anchor",7},MinesGateButton={"Gate Button",7},MinesGenerator={"Generator",7},Door={"Door",5},LeverForGate={"Lever",3},GoldPile={"Gold",0.5},Bandage={"Bandage",0.5}}
 for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
 if Player ~= game:GetService("Players").LocalPlayer then
@@ -82,6 +82,7 @@ local function ApplyHighlight(IsValid,Bool)
     end)
 end
 workspace.DescendantAdded:Connect(ApplySettings)
+workspace.CurrentRooms.DescendantAdded:Connect(ApplySettings)
 local Window = Library:CreateWindow({
     Title = "YOUHUB | v5 | " .. game.Players.LocalPlayer.Name,
     Center = true,
@@ -654,6 +655,7 @@ end
 end
 end)
 end})
+if Fools then
 Character:AddToggle("Godmode",{
 Text = "Godmode",
 Default = false,
@@ -667,12 +669,13 @@ Collison.Position = Collison.Position - Vector3.new(0,-10,0)
 end
 task.spawn(function()
 while wait(1) do
-if game.Players.LocalPlayer.Character.Humanoid.Health == 0 and not Toggles.Godmode:SetValue(false) then
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
 Toggles.Godmode:SetValue(false)
 end
 end
 end)
 end})
+end
 Character:AddToggle("MyToggle",{
 Text = "No Accessories",
 Default = false,
@@ -836,12 +839,15 @@ end
 end
 end)
 local Bypass = PlayersII:AddTab("-Bypass-")
+if not Fools then
 Bypass:AddToggle("MyToggle",{
 Text = "Speed Bypass",
 Default = false,
 Callback = function(v)
 _G.SpeedBypass = v
 end})
+end
+if Mines then
 Bypass:AddToggle("MyToggle",{
 Text = "Ladder Bypass",
 Default = false,
@@ -869,6 +875,7 @@ end
 end
 end)
 end})
+end
 if not Fools then
 Bypass:AddToggle("MyToggle",{
 Text = "Crouch Spoof Bypass",
@@ -879,7 +886,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
 RemotesFolder.Crouch:FireServer(_G.CrouchSpoof)
 end)
 end})
-end
 Bypass:AddToggle("MyToggle",{
 Text = "Manipulate Bypass",
 Default = false,
@@ -896,6 +902,7 @@ end}):AddKeyPicker("Noclip", {
     Mode = Library.IsMobile and "Toggle",
     SyncToggleState = Library.IsMobile,
 })
+end
 local PlayersIII = Tabs.Players:AddRightTabbox()
 local Body = PlayersIII:AddTab("-Body-")
 Body:AddLabel("Body Color"):AddColorPicker("Body Color",{
@@ -1394,12 +1401,13 @@ Default = false,
 Callback = function(v)
 _G.AntiSeekCar = v
 game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiSeekCar then
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
 if v.Name == "TriggerEventCollision" then 
-v:FindFirstChild("Collision").CanTouch = not _G.AntiSeekCar
-v:FindFirstChild("Collision").CanCollide = not _G.AntiSeekCar
+v:Destroy()
 end 
 end 
+end
 end)
 end})
 end
@@ -1658,15 +1666,13 @@ end})
 ESP:AddToggle("MyToggle",{
 Text = "Entities ESP",
 Default = false,
-Callback = function(v)
-_G.EntityESP = v
-while _G.EntityESP do wait(0.5)
+Callback = function(Bool)
+_G.EntityESP = Bool
     for _,Object in pairs(workspace:GetDescendants()) do
         if ESP_Entities[Object.Name] then
             ApplySettings(Object)
         end
     end
-end
 end}):AddColorPicker("EntityESP",{
 Default = Color3.new(1, 0, 0),
 Callback = function(v)
