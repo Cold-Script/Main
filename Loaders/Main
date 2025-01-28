@@ -18,6 +18,10 @@ if Player ~= game:GetService("Players").LocalPlayer then
 ESP_Other[Player.Name] = {Player.DisplayName,4}
 end
 end
+_G.ColorChestESP = Color3.new(1,0,1)
+_G.ColorItemsESP = Color3.new(1,1,0)
+_G.ColorEntityESP = Color3.new(1,0,0)
+_G.ColorOtherESP = Color3.new(0,1,1)
 local function ApplySettings(Object)
 task.spawn(function()
 if (ESP_Chest[Object.Name] or ESP_Items[Object.Name] or ESP_Entities[Object.Name] or ESP_Other[Object.Name]) and Object.ClassName == "Model" then
@@ -40,7 +44,7 @@ Instance.new("Humanoid",Object)
 end
 local function ApplyHighlight(IsValid,Bool)
                 if IsValid then
-                    if Bool and not Object:FindFirstChild("BillboardGui") then
+                    if Bool then
                         TXT = IsValid[1]
                         local UI = Instance.new("BillboardGui",Object)
                         UI.Size = UDim2.new(0,1000,0,30)
@@ -1402,7 +1406,7 @@ Callback = function(v)
 _G.AntiSeekCar = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.AntiSeekCar then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
 if v.Name == "TriggerEventCollision" then 
 v:Destroy()
 end 
@@ -1413,32 +1417,6 @@ end})
 end
 local ExploitsII = Tabs.Exploits:AddRightTabbox()
 local Troll = ExploitsII:AddTab("-Troll-")
-Troll:AddToggle("MyToggle",{
-Text = "Waste Spam Items",
-Default = false,
-Callback = function(v)
-_G.WasteItems = v
-while task.wait(0.5) do
-if not _G.WasteItems then
-break
-end
-for _,Player in pairs(game.Players:GetPlayers()) do
-local function WasteItem(Item)
-if Item.Parent ~= game.Players.LocalPlayer.Character and Item.Parent.Parent ~= game.Players.LocalPlayer then
-if ((Item.Name == "LaserPointer" or Item.Name == "Bulklight" or Item.Name == "Straplight" or Item.Name == "MoonlightCandle" or Item.Name == "Candle" or Item.Name == "Lighter" or Item.Name == "Flashlight") and Item:GetAttribute("Enabled") == false) or Item.Name == "Vitamins" then
-Item.Remote:FireServer()
-end
-end
-end
-for _,Item in pairs(Player.Backpack:GetChildren()) do
-WasteItem(Item)
-end
-for _,Item in pairs(Player.Character:GetChildren()) do
-WasteItem(Item)
-end
-end
-end
-end})
 Troll:AddToggle("MyToggle",{
 Text = "Lag Move",
 Default = false,
@@ -1462,6 +1440,55 @@ else
 SpoofMotor:Disconnect()
 end
 end})
+if Fools then
+local ExploitsIII = Tabs.Exploits:AddRightTabbox()
+local Removal = ExploitsIII:AddTab("Removal")
+Removal:AddToggle("MyToggle",{
+Text = "Removal Gate Door",
+Default = false,
+Callback = function(v)
+_G.RemoveGate = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.RemoveGate then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
+if v.Name == "Gate" then 
+v:Destroy()
+end 
+end 
+end
+end)
+end})
+Removal:AddToggle("MyToggle",{
+Text = "Removal Skeleton Doors",
+Default = false,
+Callback = function(v)
+_G.RemoveSkeleton = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.RemoveSkeleton then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
+if v.Name == "Wax_Door" then 
+v:Destroy()
+end 
+end 
+end
+end)
+end})
+Removal:AddToggle("MyToggle",{
+Text = "Removal Puzzle Doors",
+Default = false,
+Callback = function(v)
+_G.RemovePuzzle = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.RemovePuzzle then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:Descendants()) do 
+if v.Name == "MovingDoor" then 
+v:Destroy()
+end 
+end 
+end
+end)
+end})
+end
 local VisualI = Tabs.Visual:AddLeftTabbox()
 local Camera = VisualI:AddTab("-Camera-")
 Camera:AddSlider("MySlider", {
