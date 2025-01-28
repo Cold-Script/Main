@@ -1042,9 +1042,13 @@ end
 end
 end
 if workspace:FindFirstChild("Eyes") and _G.AntiEyes then
-if Fools then
+if not Fools then
+for _, v in workspace:GetChildren() do
+if v.Name == "Eyes" and v:FindFirstChild("Core") and v.Core:FindFirstChild("Ambience") and v.Core.Ambience.Playing then
 RemotesFolder.MotorReplication:FireServer(0,120,0,false)
 break
+end
+end
 end
 end
 if workspace:FindFirstChild("BackdoorLookman") and _G.AntiLookman then
@@ -1091,8 +1095,27 @@ Default = false,
 Callback = function(v)
 _G.AntiScreech = v
 if _G.AntiScreech then
+for _,v in pairs(workspace.Camera:GetDescendants()) do
+if v.Name == "Screech" then
+v:Destroy()
+elseif v.Name == "GlitchScreech" then
+v:Destroy()
+elseif v.Name == "RetroScreech" then
+v:Destroy()
+end
+end
+AntiScreech = workspace.Camera.ChildAdded:Connect(function(v)
+if v.Name == "Screech" then
+v:Destroy()
+elseif v.Name == "GlitchScreech" then
+v:Destroy()
+elseif v.Name == "RetroScreech" then
+v:Destroy()
+end
+end)
 RemotesFolder.Screech.Name = "_Screech"
 else
+AntiScreech:Disconnect()
 RemotesFolder._Screech.Name = "Screech"
 end
 end})
