@@ -25,6 +25,7 @@ if Object:FindFirstChild("RushNew") then
 if not Object.RushNew:WaitForChild("PlaySound").Playing then return end
 end
 local Color = ESP_Chest[Object.Name] and _G.ColorChestESP or ESP_Items[Object.Name] and _G.ColorItemsESP or ESP_Entities[Object.Name] and _G.ColorEntityESP or ESP_Other[Object.Name] and _G.ColorOtherESP
+
 if Object.Name == "RushMoving" or Object.Name == "AmbushMoving" or Object.Name == "Eyes" or Object.Name == "A60" or Object.Name == "A120" or Object.Name == "GlitchAmbush" or Object.Name == "GlitchRush" or Object.Name == "BackdoorRush" or Object.Name == "BackdoorLookman" then
 for i = 1, 100 do
 if Object:FindFirstChildOfClass("Part") then
@@ -73,7 +74,6 @@ local function ApplyHighlight(IsValid,Bool)
                     end
                 end
             end
-            
             ApplyHighlight(ESP_Chest[Object.Name],_G.ChestESP)
             ApplyHighlight(ESP_Items[Object.Name],_G.ItemESP)
             ApplyHighlight(ESP_Entities[Object.Name],_G.EntityESP)
@@ -812,6 +812,7 @@ DoubleClick = true,
 Func = function(v)
 game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end})
+if not Fools then
 local PlayersII = Tabs.Players:AddRightTabbox()
 local ClonedCollision = game:GetService("Players").LocalPlayer.Character.Collision:Clone()
 ClonedCollision.Name = "_CollisionClone"
@@ -839,7 +840,6 @@ end
 end
 end)
 local Bypass = PlayersII:AddTab("-Bypass-")
-if not Fools then
 Bypass:AddToggle("MyToggle",{
 Text = "Speed Bypass",
 Default = false,
@@ -1565,12 +1565,21 @@ end
 end)
 end})
 FPS:AddDivider()
+if Fools then
+FPS:AddButton({
+Text = "No Cutscenes",
+DoubleClick = true,
+Func = function()
+RemotesFolder.Cutscene:Destroy()
+end})
+else
 FPS:AddButton({
 Text = "No Cutscenes",
 DoubleClick = true,
 Func = function()
 RemotesFolder.Cutscenes:Destroy()
 end})
+end
 FPS:AddToggle("MyToggle",{
 Text = "Low Detail",
 Default = false,
@@ -1727,7 +1736,7 @@ SaveManager:SetLibrary(Library)
 
 SaveManager:IgnoreThemeSettings()
 
-SaveManager:SetFolder("winterclaws/doors")
+SaveManager:SetFolder("YOUHUB/doors")
 
 SaveManager:BuildConfigSection(Tabs.Config)
 
