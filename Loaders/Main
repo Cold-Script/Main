@@ -665,9 +665,11 @@ else
 local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,-10,0)
 end
-game:GetService("RunService").RenderStepped:Connect(function()
-if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
+task.spawn(function()
+while wait(1) do
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 and not Toggles.Godmode:SetValue(false) then
 Toggles.Godmode:SetValue(false)
+end
 end
 end)
 end})
