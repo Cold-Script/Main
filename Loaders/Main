@@ -11,7 +11,7 @@ local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/
 
 local ESP_Chest = {ChestBox={"Chest",3},ChestBoxLocked={"Chest [Locked]",3},Toolbox_Locked={"Box [Locked]",3},Toolbox={"Box",3},Chest_Vine={"Chest",7}}
 local ESP_Items = {GlitchCube={"GlitchCube",5},StarJug={"StarJug",1.5},StarBottle={"StarBottle",1.5},StarVial={"StarVial",1.5},GweenSoda={"Gween Soda",1.5},Bread={"Bread",1.5},Cheese={"Cheese",1.5},BandagePack={"BandagePack",1.5},BatteryPack={"Battery Pack",1.5},LaserPointer={"LaserPointer",1.5},Glowsticks={"Glowstick",1.5},Smoothie={"Smoothie",1.5},Straplight={"Straplight",1.5},Bulklight={"Bulklight",1.5},KeyObtain={"Key",1.5},LiveHintBook={"Book",1.5},Lighter={"Lighter",1.5},Lockpick={"Lockpicks",1.5},Vitamins={"Vitamins",1.5},Crucifix={"Crucifix",1.5},CrucifixWall={"Crucifix",1.5},SkeletonKey={"Skeleton Key",1.5},Flashlight={"Flashlight",1.5},Candle={"Candle",1.5},FuseObtain={"Fuse",1.5},LiveBreakerPolePickup={"Fuse",1.5},Shears={"Shears",1.5},Battery={"Battery",1.5},PickupItem={"Paper",1.5},ElectricalKeyObtain={"Electrical Key",1.5},Shakelight={"Shakelight",1.5},Scanner={"iPad",1.5}}
-local ESP_Entities = {SeekMovingNewClone={"Seek",7},GlitchAmbush={"Glitch-Ambush",5},GlitchRush={"Glitch-Rush",5},GlitchScreech={"Glitch-Screech",3},Grumbo={"Grumble",7},GiggleCeiling={"Giggle",7},SallyMoving={"Sally",7},BackdoorLookman={"Lookman",7},BackdoorRush={"Blitz",7},Wall={"Seek-Wall",3},JeffTheKiller={"JeffTheKiller",7},RushMoving={"Rush",5},AmbushMoving={"Ambush",5},FigureRig={"Figure",7},FigureRagdoll={"Figure",7},FigureLibrary={"Figure",7},SeekMoving={"Seek",5.5},Eyes={"Eyes",4},Snare={"Snare",2},A60={"A-60",10},A120={"A-120",10}}
+local ESP_Entities = {SeekMovingNewClone={"Seek",7},GlitchAmbush={"Glitch-Ambush",5},GlitchRush={"Glitch-Rush",5},Grumbo={"Grumble",7},BackdoorLookman={"Lookman",7},BackdoorRush={"Blitz",7},Wall={"Seek-Wall",3},JeffTheKiller={"JeffTheKiller",7},RushMoving={"Rush",5},AmbushMoving={"Ambush",5},FigureRig={"Figure",7},FigureRagdoll={"Figure",7},FigureLibrary={"Figure",7},SeekMoving={"Seek",5.5},Eyes={"Eyes",4},Snare={"Snare",2},A60={"A-60",10},A120={"A-120",10}}
 local ESP_Other = {Rooms_Locker={"Locker",3},Rooms_Frigde_Locker={"Locker",3},TimerLever={"Timer Lever",7},WaterPump={"WaterPump",7},MinesAnchor={"Anchor",7},MinesGateButton={"Gate Button",7},MinesGenerator={"Generator",7},Door={"Door",5},LeverForGate={"Lever",3},GoldPile={"Gold",0.5},Bandage={"Bandage",0.5}}
 for _,Player in pairs(game:GetService("Players"):GetPlayers()) do
 if Player ~= game:GetService("Players").LocalPlayer then
@@ -25,7 +25,6 @@ if Object:FindFirstChild("RushNew") then
 if not Object.RushNew:WaitForChild("PlaySound").Playing then return end
 end
 local Color = ESP_Chest[Object.Name] and Color3.new(1,0,1) or ESP_Items[Object.Name] and Color3.new(1,1) or ESP_Entities[Object.Name] and Color3.new(1) or ESP_Other[Object.Name] and Color3.new(0,1,1)
-
 if Object.Name == "RushMoving" or Object.Name == "AmbushMoving" or Object.Name == "Eyes" or Object.Name == "A60" or Object.Name == "A120" or Object.Name == "GlitchAmbush" or Object.Name == "GlitchRush" or Object.Name == "BackdoorRush" or Object.Name == "BackdoorLookman" then
 for i = 1, 100 do
 if Object:FindFirstChildOfClass("Part") then
@@ -800,7 +799,6 @@ Callback = function(v)
 _G.SpeedBypass = v
 end})
 end
-if Mines then
 Bypass:AddToggle("MyToggle",{
 Text = "Ladder Bypass",
 Default = false,
@@ -828,7 +826,6 @@ end
 end
 end)
 end})
-end
 if not Fools then
 Bypass:AddToggle("MyToggle",{
 Text = "Crouch Spoof Bypass",
